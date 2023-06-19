@@ -1,2 +1,2 @@
 # Závěrečný projekt
--nevím bráško info o mám projektu žeo
+- Nevím bráško info o mám projektu žeo
