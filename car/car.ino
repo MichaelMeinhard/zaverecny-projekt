@@ -24,6 +24,7 @@ std::vector<MOTOR_PINS> motorPins =
 #define DOWN 2
 #define LEFT 3
 #define RIGHT 4
+#define STOP 0
 
 #define RIGHT_MOTOR 0
 #define LEFT_MOTOR 1
@@ -33,9 +34,10 @@ std::vector<MOTOR_PINS> motorPins =
 
 const int PWMFreq = 1000; /* 1 KHz */
 const int PWMResolution = 8;
+const int PWMSpeedChannel = 2;
 const int PWMLightChannel = 3;
 
-//Camera constants
+//Camera related constants
 #define PWDN_GPIO_NUM     32
 #define RESET_GPIO_NUM    -1
 #define XCLK_GPIO_NUM      0
@@ -54,7 +56,7 @@ const int PWMLightChannel = 3;
 #define PCLK_GPIO_NUM     22
 
 const char* ssid     = "WiFiCar";
-const char* password = "123456789123";
+const char* password = "12345678";
 
 AsyncWebServer server(80);
 AsyncWebSocket wsCamera("/Camera");
@@ -156,6 +158,13 @@ const char* htmlHomePage PROGMEM = R"HTMLHOMEPAGE(
         <td></td>
       </tr>
       <tr/><tr/>
+      <tr>
+        <td style="text-align:left"><b>Speed:</b></td>
+        <td colspan=2>
+         <div class="slidecontainer">
+            <input type="range" min="0" max="255" value="150" class="slider" id="Speed" oninput='sendButtonInput("Speed",value)'>
+          </div>
+        </td>
       </tr>        
       <tr>
         <td style="text-align:left"><b>Light:</b></td>
@@ -191,6 +200,8 @@ const char* htmlHomePage PROGMEM = R"HTMLHOMEPAGE(
         websocketCarInput = new WebSocket(webSocketCarInputUrl);
         websocketCarInput.onopen    = function(event)
         {
+          var speedButton = document.getElementById("Speed");
+          sendButtonInput("Speed", speedButton.value);
           var lightButton = document.getElementById("Light");
           sendButtonInput("Light", lightButton.value);
         };
@@ -236,5 +247,43 @@ void rotateMotor(int motorNumber, int motorDirection)
   {
     digitalWrite(motorPins[motorNumber].pinIN1, LOW);
     digitalWrite(motorPins[motorNumber].pinIN2, LOW);       
+  }
+}
+
+void moveCar(int inputValue)
+{
+  Serial.printf("Got value as %d\n", inputValue);  
+  switch(inputValue)
+  {
+
+    case UP:
+      rotateMotor(RIGHT_MOTOR, FORWARD);
+      rotateMotor(LEFT_MOTOR, FORWARD);                  
+      break;
+  
+    case DOWN:
+      rotateMotor(RIGHT_MOTOR, BACKWARD);
+      rotateMotor(LEFT_MOTOR, BACKWARD);  
+      break;
+  
+    case LEFT:
+      rotateMotor(RIGHT_MOTOR, FORWARD);
+      rotateMotor(LEFT_MOTOR, BACKWARD);  
+      break;
+  
+    case RIGHT:
+      rotateMotor(RIGHT_MOTOR, BACKWARD);
+      rotateMotor(LEFT_MOTOR, FORWARD); 
+      break;
+ 
+    case STOP:
+      rotateMotor(RIGHT_MOTOR, STOP);
+      rotateMotor(LEFT_MOTOR, STOP);    
+      break;
+  
+    default:
+      rotateMotor(RIGHT_MOTOR, STOP);
+      rotateMotor(LEFT_MOTOR, STOP);    
+      break;
   }
 }
