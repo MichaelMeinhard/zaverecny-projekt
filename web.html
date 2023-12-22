@@ -4,35 +4,90 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <style>
-    .center {
-      margin: auto;
-      width: auto;
-      text-align: center;
+    body {
+      background-color: #5701C3 !important;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='362' height='362' viewBox='0 0 800 800'%3E%3Cg fill='none' stroke='%23000000' stroke-width='1'%3E%3Cpath d='M769 229L1037 260.9M927 880L731 737 520 660 309 538 40 599 295 764 126.5 879.5 40 599-197 493 102 382-31 229 126.5 79.5-69-63'/%3E%3Cpath d='M-31 229L237 261 390 382 603 493 308.5 537.5 101.5 381.5M370 905L295 764'/%3E%3Cpath d='M520 660L578 842 731 737 840 599 603 493 520 660 295 764 309 538 390 382 539 269 769 229 577.5 41.5 370 105 295 -36 126.5 79.5 237 261 102 382 40 599 -69 737 127 880'/%3E%3Cpath d='M520-140L578.5 42.5 731-63M603 493L539 269 237 261 370 105M902 382L539 269M390 382L102 382'/%3E%3Cpath d='M-222 42L126.5 79.5 370 105 539 269 577.5 41.5 927 80 769 229 902 382 603 493 731 737M295-36L577.5 41.5M578 842L295 764M40-201L127 80M102 382L-261 269'/%3E%3C/g%3E%3Cg fill='%239205FF'%3E%3Ccircle cx='769' cy='229' r='6'/%3E%3Ccircle cx='539' cy='269' r='6'/%3E%3Ccircle cx='603' cy='493' r='6'/%3E%3Ccircle cx='731' cy='737' r='6'/%3E%3Ccircle cx='520' cy='660' r='6'/%3E%3Ccircle cx='309' cy='538' r='6'/%3E%3Ccircle cx='295' cy='764' r='6'/%3E%3Ccircle cx='40' cy='599' r='6'/%3E%3Ccircle cx='102' cy='382' r='6'/%3E%3Ccircle cx='127' cy='80' r='6'/%3E%3Ccircle cx='370' cy='105' r='6'/%3E%3Ccircle cx='578' cy='42' r='6'/%3E%3Ccircle cx='237' cy='261' r='6'/%3E%3Ccircle cx='390' cy='382' r='6'/%3E%3C/g%3E%3C/svg%3E");
+      background-attachment: fixed;
     }
 
-    .text{
-      color: #ffffff;
-      font-size: large;
+    .container {
+      display: flex;
+      gap: 10px;
+      flex-direction: column;
+      align-items: center;
     }
 
-    .bg {
-      background-color: rgb(26, 26, 26)
+    #cameraImage {
+      width: clamp(250px, 50%, 800px);
+      aspect-ratio: 16/9;
+      box-shadow: 0 0 10px #22222250;
+      border-radius: 15px;
+      overflow: hidden;
+      padding: 10px;
+      background-color: #00000055
+    }
+
+    .button-layout {
+      display: grid;
+      max-width: 400px;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .button-layout>button:nth-of-type(1) {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .button-layout>button:nth-of-type(2) {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .button-layout>button:nth-of-type(3) {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    .button-layout>button:nth-of-type(4) {
+      grid-column: 3;
+      grid-row: 2;
+    }
+
+    .button-layout>button {
+      display: grid;
+      place-content: center;
+      background-color: transparent;
+      border-radius: 12px;
+      border: 2px solid #EEEEEE;
+      transition: 100ms ease;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      color: white;
+    }
+
+    .button-layout>button:hover {
+      background: #ffffffa3;
+      color: #6917ce;
+    }
+
+    .button-layout>button:active {
+      background: #ffffffc6;
+    }
+
+    .button-layout>button>span {
+      width: fit-content;
+      height: fit-content;
     }
 
     .arrows {
       font-size: 40px;
-      color: rgb(255, 255, 255);
-    }
-
-    td.button {
-      background-color: black;
-      border-radius: 25%;
-      box-shadow: 5px 5px #3900be;
-    }
-
-    td.button:active {
-      transform: translate(5px, 5px);
-      box-shadow: none;
+      scale: 1.2;
+      padding: 24px;
+      color: #EEEEEE;
+      filter: drop-shadow(5px);
     }
 
     .noselect {
@@ -51,23 +106,58 @@
                                       supported by Chrome and Opera */
     }
 
-    .slidecontainer {
-      width: 100%;
+    .slider__container {
+      max-width: 1000px;
+      padding-inline: min(10px, 5%);
+      margin-inline: auto;
+    }
+
+    .slider__header {
+      font-family: sans-serif;
+      font-size: 2rem;
+      margin-block: 0;
+      padding-block: 1rem;
+      color: whitesmoke;
     }
 
     .slider {
       -webkit-appearance: none;
+      position: relative;
       width: 100%;
       height: 15px;
       border-radius: 5px;
-      background: #ffffff;
+      background: #a785ff00;
       outline: none;
       -webkit-transition: .2s;
       transition: opacity .2s;
+      z-index: 10;
     }
 
-    .slider:hover {
-      opacity: 1;
+    .slider__wrapper {
+      --width: 0px;
+      position: relative;
+    }
+
+    .slider__wrapper::before {
+      content: '';
+      height: 15px;
+      width: 100%;
+      background-color: #a785ff;
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      border-radius: 5px;
+    }
+
+    .slider__wrapper::after {
+      content: '';
+      height: 15px;
+      width: var(--width);
+      background-color: #350782;
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      border-radius: 5px;
     }
 
     .slider::-webkit-slider-thumb {
@@ -76,58 +166,54 @@
       width: 25px;
       height: 25px;
       border-radius: 50%;
-      background: #3900be;
       cursor: pointer;
+      background-color: whitesmoke;
     }
 
     .slider::-moz-range-thumb {
       width: 25px;
       height: 25px;
       border-radius: 50%;
-      background: #3900beed;
+      background: #ac95e6;
+      border: 2px solid whitesmoke;
       cursor: pointer;
+    }
+
+    @media screen and (max-width: 450px) {
+      .button-layout>button>svg {
+        width: 24px;
+        height: 24px;
+      }
     }
   </style>
 
 </head>
 
 <body class="noselect center bg">
-  <table id="mainTable" style="width:400px;margin:auto;table-layout:fixed" CELLSPACING=10>
-    <tr>
-      <img id="cameraImage" src="" style="width:400px;height:250px"></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td class="button" ontouchstart='sendButtonInput("MoveCar","1")' ontouchend='sendButtonInput("MoveCar","0")'><span
-          class="arrows">&#8679;</span></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="button" ontouchstart='sendButtonInput("MoveCar","3")' ontouchend='sendButtonInput("MoveCar","0")'><span
-          class="arrows">&#8678;</span></td>
-      <td class="button"></td>
-      <td class="button" ontouchstart='sendButtonInput("MoveCar","4")' ontouchend='sendButtonInput("MoveCar","0")'><span
-          class="arrows">&#8680;</span></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td class="button" ontouchstart='sendButtonInput("MoveCar","2")' ontouchend='sendButtonInput("MoveCar","0")'><span
-          class="arrows">&#8681;</span></td>
-      <td></td>
-    </tr>
-    <tr></tr>
-    <tr>
-      <td class= "text" style="text-align:left"><b>Light:</b></td>
-      <td colspan=2>
-        <div class="slidecontainer">
-          <input type="range" min="0" max="255" value="0" class="slider" id="Light"
-            oninput='sendButtonInput("Light",value)'>
-        </div>
-      </td>
-    </tr>
-  </table>
+  <div class="container">
+    <img id="cameraImage" src=""></td>
+    <div class="button-layout">
+      <button type="button" class="button" ontouchstart='sendButtonInput("MoveCar","3")' ontouchend='sendButtonInput("MoveCar","0")' onmousedown='sendButtonInput("MoveCar","1")' onmouseup='sendButtonInput("MoveCar","0")'><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><g transform="rotate(-90 12 12)"><path fill="none" stroke="currentColor" stroke-width="1.5" d="m3.165 19.503l7.362-16.51c.59-1.324 2.355-1.324 2.946 0l7.362 16.51c.667 1.495-.814 3.047-2.202 2.306l-5.904-3.152c-.459-.245-1-.245-1.458 0l-5.904 3.152c-1.388.74-2.87-.81-2.202-2.306Z"/></g></svg></button>
+      <button type="button" class="button" ontouchstart='sendButtonInput("MoveCar","1")' ontouchend='sendButtonInput("MoveCar","0")' onmousedown='sendButtonInput("MoveCar","3")' onmouseup='sendButtonInput("MoveCar","0")'><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.5" d="m3.165 19.503l7.362-16.51c.59-1.324 2.355-1.324 2.946 0l7.362 16.51c.667 1.495-.814 3.047-2.202 2.306l-5.904-3.152c-.459-.245-1-.245-1.458 0l-5.904 3.152c-1.388.74-2.87-.81-2.202-2.306Z"/></svg></button>
+      <button type="button" class="button" ontouchstart='sendButtonInput("MoveCar","2")' ontouchend='sendButtonInput("MoveCar","0")' onmousedown='sendButtonInput("MoveCar","4")' onmouseup='sendButtonInput("MoveCar","0")'><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><g transform="rotate(180 12 12)"><path fill="none" stroke="currentColor" stroke-width="1.5" d="m3.165 19.503l7.362-16.51c.59-1.324 2.355-1.324 2.946 0l7.362 16.51c.667 1.495-.814 3.047-2.202 2.306l-5.904-3.152c-.459-.245-1-.245-1.458 0l-5.904 3.152c-1.388.74-2.87-.81-2.202-2.306Z"/></g></svg></button>
+      <button type="button" class="button" ontouchstart='sendButtonInput("MoveCar","4")' ontouchend='sendButtonInput("MoveCar","0")' onmousedown='sendButtonInput("MoveCar","2")' onmouseup='sendButtonInput("MoveCar","0")'><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><g transform="rotate(90 12 12)"><path fill="none" stroke="currentColor" stroke-width="1.5" d="m3.165 19.503l7.362-16.51c.59-1.324 2.355-1.324 2.946 0l7.362 16.51c.667 1.495-.814 3.047-2.202 2.306l-5.904-3.152c-.459-.245-1-.245-1.458 0l-5.904 3.152c-1.388.74-2.87-.81-2.202-2.306Z"/></g></svg></button>
+    </div>
+  </div>
+<div class="slider__container">
+    <h6 class="slider__header">Light:</h6>
+    <div class="slider__wrapper" id="wrapper">
+      <input type="range" min="0" max="255" value="0" class="slider" id="Light" oninput='sendButtonInput("Light",value)'>
+    </div>
+  </div>
 
   <script>
+    const slider = document.getElementById("Light")
+    const wrapper = document.getElementById("wrapper")
+    window.addEventListener("input", (e) => {
+      const left = (slider.clientWidth / e.target.max) * e.target.value
+      wrapper.style.setProperty('--width', left + "px");
+    })
+
     var webSocketCameraUrl = "ws:\/\/" + window.location.hostname + "/Camera";
     var webSocketCarInputUrl = "ws:\/\/" + window.location.hostname + "/CarInput";
     var websocketCamera;
