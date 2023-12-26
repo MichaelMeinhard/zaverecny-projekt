@@ -18,16 +18,16 @@ openright
 \newcommand\zamereni{se zaměřením na počítačové sítě a programování} %% -- napiš číslo a název tvého oboru
 \newcommand\skola{Střední škola průmyslová a umělecká, Opava} %% vyplň název školy
 \newcommand\trida{IT4} %% vyplň jméno svého konzultanta
-\newcommand\jmenoAutora{Viktor Hujer}  %% vyplň své jméno
+\newcommand\jmenoAutora{Michael Meinhard}  %% vyplň své jméno
 \newcommand\skolniRok{2023/24} %% vyplň rok
 \newcommand\datumOdevzdani{1. 1. 2024} %% vyplň rok
-\newcommand\nazevPrace{Tvorba odborné dokumentace s využitím typografického systému \LaTeX} %% vyplň název své práce
+\newcommand\nazevPrace{Dálkově ovládané RC auto přes WiFi} %% vyplň název své práce
 
 \title{\nazevPrace} %% -- Název tvé práce
 \author{\jmenoAutora} %% -- tvé jméno
 \date{\datumOdevzdani} %% -- rok, kdy píšeš SOČku
 
-\usepackage[top=2.5cm, bottom=2.5cm, left=3.5cm, right=1.5cm]{geometry} %% nastaví okraje, left -- vnitřní okraj, right -- vnější okraj
+\usepackage[top=2.5cm, bottom=2.5cm, left=3.5cm, right=2.5cm]{geometry} %% nastaví okraje, left -- vnitřní okraj, right -- vnější okraj
 
 \usepackage[czech]{babel} %% balík babel pro sazbu v češtině
 \usepackage[utf8]{inputenc} %% balíky pro kódování textu
@@ -40,7 +40,7 @@ openright
 
 \usepackage{hyperref} %% balíček, který v PDF vytváří odkazy
 
-\linespread{1.25} %% řádkování
+\linespread{1.5} %% řádkování
 \setlength{\parskip}{0.5em} %% odsazení mezi odstavci
 
 
@@ -318,23 +318,12 @@ openright
 	
 	\vspace{18pt}
 
-%% Abstrakt v angličtině
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
-	\noindent{\Large{\bfseries{Abstract}}}
-	
-	\noindent Write your abstract here! \lipsum[1] %% přepiš!!
-	
-	\vspace{18pt}
-	
-	\noindent{\large{\bfseries{Keywords}}}
-	
-	\noindent Template, \LaTeX, High school proffessional activity, \dots 
-	
-	\clearpage %% Zalomení stránky
-
 %% Stránka s generovaným obsahem
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
-	
+        
+        \setcounter{tocdepth}{3}  % Zahrnuje subsekce do obsahu
+        \setcounter{secnumdepth}{3}  % Čísluje subsekce
+   
 	\tableofcontents %% Vygeneruje tabulku s obsahem
 
 	\pagenumbering{arabic} %% Nastavení způsobu číslování stránek (alternativy roman | Roman)
@@ -365,242 +354,63 @@ První kapitola této práce obsahuje základní informace o~{\LaTeX}u; stručn�
 %* motivaci pro další čtení textu včetně stručného uvedení obsahu následujících kapitol 
 
 
-\chapter{Typografický systém LaTeX}
+\chapter{VÝROBA A SESTAVENÍ RC MODELU}
+\chapter{PRINCIP VZDÁLENÉHO OVLÁDÁNÍ}
+\chapter{VYUŽITÉ TECHNOLOGIE}
 
-\section{Úvod}
-\label{sec:uvod}
+\section{HARDWARE}
 
-V této kapitole se seznámíme s \LaTeX{}, což je vysoko kvalitní typografický systém, speciálně navržený pro produkci technické a vědecké dokumentace. \LaTeX{} je široce používán akademiky, vědci, inženýry a dalšími profesionály, kteří potřebují efektivně vytvářet vysoce kvalitní dokumenty, jako jsou články, reporty, knihy a dokonce i prezentace.
+V této kapitole se seznámíme s použitým hardware.
 
-\subsection{Co je \LaTeX{}}
-\LaTeX{} je založen na programu \TeX{}, který byl původně vytvořen Donaldem E. Knuthem v pozdních 70. letech. Na rozdíl od běžných textových procesorů, které jsou "What You See Is What You Get" (WYSIWYG), \LaTeX{} funguje na principu "What You See Is What You Mean" (WYSIWYM). To znamená, že se uživatelé soustředí na strukturu a obsah svého textu, zatímco vzhled dokumentu je řízen předdefinovanými šablonami.
-
-\subsection{Výhody používání \LaTeX{}}
-Hlavní výhodou používání \LaTeX{} je jeho schopnost vytvářet profesionálně vypadající dokumenty s konzistentním formátováním. Dále nabízí:
-
+\subsection{Seznam součástek}
 \begin{itemize}
-	\item Vynikající kvalitu sazby, zvláště pro matematické vzorce.
-	\item Automatizované generování obsahu, seznamů obrázků, tabulek a bibliografických odkazů.
-	\item Možnost snadno pracovat s komplexními dokumenty jako jsou disertace nebo knihy.
-	\item Rozsáhlé možnosti přizpůsobení a širokou škálu balíčků rozšiřujících jeho funkčnost.
+    \item Vývojová deska ESP32-CAM,
+    \item H můstek L298N Dual H Most DC,
+    \item arduino MEGA 2560 Rev3,
+    \item Hadex motorek 3-6V/0,17A s převodovkou, převod 1/48
+    \item snímač otáček
+    \item nepájivé pole
 \end{itemize}
 
-V následujících sekcích se podrobněji podíváme na základní prvky \LaTeX{} a naučíme se, jak je používat k vytváření kvalitních dokumentů.
+\subsection{ESP32-CAM}
+Hlavní výhodou používání.
 
+\subsection{L298N Dual H Most DC}
+Hlavní výhodou používání.
 
-\section{Základní struktura dokumentu}
+\subsection{Arduino MEGA 2560 Rev3}
+Hlavní výhodou používání.
+
+\subsection{Hadex motorek 3-6V/0,17A}
+Hlavní výhodou používání.
+
+\section{SOFTWARE}
 \label{sec:zakladni_struktura}
 
-V této kapitole se podrobněji podíváme na základní strukturu dokumentu v \LaTeX{}u. Po porozumění této struktuře budete schopni vytvářet vlastní dokumenty s přizpůsobeným formátováním a strukturou.
+V této kapitole se podrobněji podíváme na.
 
-\subsection{Preambule dokumentu}
-Preambule je první částí každého \LaTeX{}ového dokumentu. Zde definujeme typ dokumentu, který chceme vytvořit, a nastavíme různé parametry, které ovlivňují celkový vzhled dokumentu. Preambule také často obsahuje příkazy pro načítání různých balíčků, které rozšiřují základní funkčnost \LaTeX{}u.
+\subsection{Použitý jazyk}
+Preambule je první částí každého.
 
-\begin{verbatim}
-	\documentclass[options]{class}
-	\usepackage[options]{package}
-\end{verbatim}
+\subsection{Arduino IDE}
+Preambule je první částí každého.
 
-\subsection{Hlavní tělo dokumentu}
-Hlavní tělo dokumentu začíná příkazem \verb|\begin{document}| a končí \verb|\end{document}|. Veškerý obsah, který chcete mít ve svém dokumentu, by měl být umístěn mezi tyto dva příkazy. 
+\subsection{Web Server}
+Preambule je první částí každého.
 
-\subsection{Sekce a podsekce}
-Pro organizaci obsahu se často používají sekce a podsekce. Tyto struktury pomáhají čtenáři lépe navigovat dokumentem a rozdělit text do logických bloků.
+\subsection{WebSocket komunikace}
+Pokracuj textem zde.
 
-\begin{verbatim}
-	\section{Název sekce}
-	\subsection{Název podsekce}
-	\subsubsection{Název podpodsekce}
-\end{verbatim}
+\chapter{POUŽITÉ POSTUPY A ŘEŠENÍ}
 
-\subsection{Odstavce a rozestupy}
-V \LaTeX{}u je nový odstavec vytvořen jednoduše vložením jedné nebo více prázdných řádek. Rozestupy mezi odstavci, stejně jako zarovnání textu, můžeme upravit podle potřeby.
+\section{HARDWARE TECHNOLOGIE}
 
-\section{Práce s textem}
-\label{sec:prace_s_textem}
+\subsection{Nahrávání kódu}
+napis zde.
 
-Tato část se zaměřuje na základní techniky práce s textem v \LaTeX{}u, včetně formátování textu, vytváření seznamů a využití křížových odkazů a poznámek pod čarou.
+\subsection{Zoptimálnění funkčnosti ESP32}
+napis zde.
 
-\subsection{Formátování textu}
-Formátování textu je klíčovým prvkem pro zvýraznění důležitých informací a zlepšení čitelnosti dokumentu.
-
-\subsubsection{Zvýraznění textu}
-V \LaTeX{}u existuje několik způsobů, jak zvýraznit text. Můžeme použít tučné písmo, kurzívu nebo podtržení.
-
-\begin{verbatim}
-	\textbf{tučné písmo}, \textit{kurzíva}, \underline{podtržený text}
-\end{verbatim}
-
-\subsubsection{Seznamy a výčty}
-Seznamy jsou užitečné pro strukturování informací a jejich uspořádání do čitelné formy. \LaTeX{} podporuje nečíslované, číslované a popisné seznamy.
-
-\begin{verbatim}
-	\begin{itemize}
-		\item Nečíslovaný seznam
-	\end{itemize}
-	
-	\begin{enumerate}
-		\item Číslovaný seznam
-	\end{enumerate}
-	
-	\begin{description}
-		\item[Popisek] Popisný seznam
-	\end{description}
-\end{verbatim}
-
-\subsection{Křížové odkazy a poznámky pod čarou}
-Křížové odkazy a poznámky pod čarou jsou důležité pro odkazování na jiné části dokumentu a poskytování dodatečných informací.
-
-\subsubsection{Křížové odkazy}
-Pomocí křížových odkazů můžeme odkazovat na jiné sekce, obrázky nebo tabulky v dokumentu.
-
-\begin{verbatim}
-	\label{sec:nazev_sekce}
-	Odkaz na sekci \ref{sec:nazev_sekce}.
-\end{verbatim}
-
-\subsubsection{Poznámky pod čarou}
-Poznámky pod čarou poskytují dodatečné informace bez přerušení toku hlavního textu.
-
-\begin{verbatim}
-	Text s poznámkou pod čarou.\footnote{Text poznámky pod čarou.}
-\end{verbatim}
-
-
-
-\section{Matematické vzorce a symboly}
-\label{sec:matematicke_vzorce_a_symboly}
-
-Tato část poskytuje přehled o vkládání matematických vzorců a symbolů do dokumentů v \LaTeX{}u, což je nezbytné pro tvorbu akademických a vědeckých textů.
-
-\subsection{Základní matematické prostředí}
-\LaTeX{} nabízí několik prostředí pro práci s matematikou, včetně "math" pro základní matematické výrazy a "displaymath" pro samostatné rovnice.
-
-\begin{verbatim}
-	$z = x + y$ % Inline matematika
-	\begin{displaymath}
-		z = x + y
-	\end{displaymath}
-\end{verbatim}
-
-\subsection{Rovnice a symboly}
-Matematické rovnice a symboly jsou základem mnoha vědeckých dokumentů, a \LaTeX{} poskytuje širokou škálu nástrojů pro jejich efektivní použití.
-
-\subsubsection{Vložení jednoduché rovnice}
-Pro vložení jednoduché rovnice můžeme použít prostředí "equation" nebo "align" pro více rovnic s zarovnáním.
-
-\begin{verbatim}
-	\begin{equation}
-		E = mc^2
-	\end{equation}
-\end{verbatim}
-
-\subsubsection{Pokročilé matematické výrazy}
-Pro složitější matematické výrazy, jako jsou integrály, sumy nebo frakce, \LaTeX{} nabízí rozsáhlé možnosti.
-
-\begin{verbatim}
-	\begin{equation}
-		\int_0^\infty e^{-x} \, dx
-	\end{equation}
-\end{verbatim}
-
-
-
-\section{Práce s obrázky a tabulkami}
-\label{sec:prace_s_obrazky_a_tabulkami}
-
-Tato kapitola je zaměřena na vkládání a formátování obrázků a tabulek v \LaTeX{}u, což jsou klíčové dovednosti pro vytváření vizuálně atraktivních a informativních dokumentů.
-
-\subsection{Vkládání obrázků}
-Vkládání obrázků do dokumentů \LaTeX{}u umožňuje autorům přidávat vizuální prvky, které podporují a doplňují textový obsah.
-
-\subsubsection{Formáty obrázků}
-\LaTeX{} podporuje různé formáty obrázků, včetně populárních formátů jako JPEG, PNG a PDF. Výběr správného formátu je důležitý pro kvalitu a velikost souboru.
-
-\begin{verbatim}
-	\includegraphics[width=0.5\textwidth]{obrazek.jpg}
-\end{verbatim}
-
-\subsubsection{Pozicování obrázků}
-Správné pozicování obrázků je klíčové pro zachování čitelnosti a estetiky dokumentu. \LaTeX{} nabízí několik možností, jak ovlivnit umístění obrázků v textu.
-
-\begin{verbatim}
-	\begin{figure}[h]
-		\centering
-		\includegraphics[width=0.5\textwidth]{obrazek.jpg}
-		\caption{Popisek obrázku}
-		\label{fig:obrazek}
-	\end{figure}
-\end{verbatim}
-
-\subsection{Vytváření tabulek}
-Tabulky jsou nezbytné pro organizované a efektivní prezentování dat. \LaTeX{} umožňuje vytváření jak jednoduchých, tak složitých tabulek.
-
-\subsubsection{Základní tabulky}
-Pro vytváření základních tabulek lze využít prostředí "tabular". Jednoduchá tabulka může být vytvořena bez složitých formátovacích nástrojů.
-
-\begin{verbatim}
-	\begin{tabular}{|c|c|c|}
-		\hline
-		A & B & C \\
-		\hline
-		1 & 2 & 3 \\
-		\hline
-	\end{tabular}
-\end{verbatim}
-
-\subsubsection{Pokročilé tabulky}
-Pro složitější tabulky, jako jsou tabulky s více řádky nebo sloupci, lze použít pokročilé formátovací možnosti, jako jsou sloučené buňky a speciální zarovnání.
-
-\begin{verbatim}
-	\begin{table}[h]
-		\centering
-		\begin{tabular}{|c|c|c|}
-			\hline
-			\multirow{2}{*}{A} & B1 & C1 \\
-			\cline{2-3}
-			& B2 & C2 \\
-			\hline
-		\end{tabular}
-		\caption{Pokročilá tabulka}
-		\label{tab:pokrocila_tabulka}
-	\end{table}
-\end{verbatim}
-
-
-
-\section{Bibliografie a citace}
-\label{sec:bibliografie_a_citace}
-
-Tato kapitola poskytuje podrobný návod na vytváření bibliografie a správné citování zdrojů v \LaTeX{}u, což jsou nezbytné dovednosti pro akademické psaní a publikování.
-
-\subsection{Vytváření bibliografie}
-\LaTeX{} umožňuje efektivní správu bibliografických záznamů a jejich automatické formátování. Tento proces zahrnuje několik kroků od definování zdrojů po jejich začlenění do dokumentu.
-
-\begin{verbatim}
-	\begin{thebibliography}{99}
-		\bibitem{nazev}
-		Autor, \emph{Název knihy}, Nakladatelství, Rok.
-	\end{thebibliography}
-\end{verbatim}
-
-\subsection{Citování zdrojů}
-Správné citování zdrojů je klíčové pro akademickou integritu a umožňuje čtenářům dohledat zmiňované informace. V \LaTeX{}u je možné citovat zdroje jednoduše pomocí příkazu \verb|\cite|.
-
-\begin{verbatim}
-	Jak bylo zmíněno v \cite{nazev}, ...
-\end{verbatim}
-
-
-
-	
-
-	\chapter{Tipy k psaní}
-	\pagestyle{fancy}
-	Jak už jsem psal výše \LaTeX je dosti komplexní systém, který umožňuje psát velmi rozsáhlé text. Jeho autor Donald Knuth ho stvořil, aby mohl vydat jeho učebnici \emph{The Art of Computer Programming} a dodnes se je využíván pro sazbu skript, učebnic, článků či závěrečných prací. V této kapitole najdeš ukázky různých funkcí a balíčků \LaTeX u od těch nejzákladnějších až po složitější. Neznamená to nutně, že všechny musíš použít, ale když potřebuješ pomoct, tak je dobré mít oporu. 
-	
-	Pokud s \LaTeX em úplně začínáš tak ti můžu doporučit přiručku \emph{Ne příliš stručný úvod do systému \LaTeX2e}~\cite{LaTeXprirucka}. Případně spoustu užitečných informací nalezneš na Wikibooks~\cite{wikibooksLaTeX}. Pokud narazíš na nějaký problém googli. Na internetu je spoustu fór, kde pravděpodobně už někdo podobný problém řešil. Asi nejvíce otho najdeš na stránce \emph{TeX - LaTeX Stackexchange} \cite{stackExchange}.
-	
 	
 	\section[Základy]{Základy: Text, obrázky, tabulky a citace} %%[Text, který bude v obsahu]{Text, který se vytiskne na stránce} Zkus měnit jednotlivé závorky a uvidíš :) 
 	Psaní v \LaTeX{u} není žádná věda, stačí psát normálně do zdrojového souboru. Pokud bys chtěl psát obrážky či číslovaný seznam, pak můžeš použít prostředí \texttt{itemize} či \texttt{enumerate}. Často je důležité používat nezlomitelnou mezeru. Tu uděláš pomocí \verb|~|~(tildy). Pokud budeš chtít psát uvozovky použij příkaz \texttt{uv}, pomocí něj se ti vytvoří uvozovky podle příslušného jazyka. V česku tedy ve formátu 99 66. Použití příkazu najdeš níže v textu.
