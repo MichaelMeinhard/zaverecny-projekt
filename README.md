@@ -16,6 +16,5 @@
 - [Roboticky podvozek](https://dratek.cz/arduino/925-roboticky-podvozek.html?fbclid=IwAR1W0UX3auUpHJxZ4LAlYJNBKFeC09_LZsWB9fi1fB7X1KKGJA9Eo-o43sg)
 - Vývojová deska ESP32-CAM, WiFi + Bluetooth s kamerovým modulem OV2640
 - H můstek pro krokový motor - L298N Dual H Most DC
-- Mini Step Down Buck napájecí modul 3A DC 5-23 na DC 1-17
 - Ultrazvukový měřič vzdálenosti pro Arduino - 5Pin HY-SRF05 (Zatím nepoužito)
 - Infračervený senzor překážek (Zatím nepoužito)
