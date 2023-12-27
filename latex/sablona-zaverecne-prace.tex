@@ -41,7 +41,7 @@ openright
 \usepackage{hyperref} %% balíček, který v PDF vytváří odkazy
 
 \linespread{1.5} %% řádkování
-\setlength{\parskip}{0.5em} %% odsazení mezi odstavci
+\setlength{\parskip}{1em} %% odsazení mezi odstavci
 
 
 \usepackage[pagestyles]{titlesec} %% balíček pro úpravu stylu kapitol a sekcí
@@ -75,9 +75,7 @@ openright
 \usepackage{amsfonts}   %% pro sazbu matematických symbolů
 \usepackage{esint}     %% pro sazbu různých integrálů (např \oiint)
 \usepackage{mathrsfs}
-\usepackage{helvet} % Helvet font
 \usepackage{mathptmx} % Times New Roman
-\usepackage{Oswald} % Oswald font
 
 
 %% makra pro sazbu matematiky
@@ -212,9 +210,6 @@ openright
 }
 
 
-%% Bordel pro práci - můžeš smáznout :) 
-%%%%%%%%%%%%%%%%%%%
-
 \usepackage{lipsum} %% balíček který píše lipsum (nesmyslný text, který se používá pro kontrolu typografie)
 
 %% Začátek dokumentu
@@ -267,7 +262,7 @@ openright
 		\end{table}		
 	}
 	
-\cleardoublepage %% Zalomení dvojstránky
+\cleardoublepage
 	
 %% Stránka obsahující poděkování a prohlášení
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -276,9 +271,10 @@ openright
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
 	\noindent{\large{\bfseries{Poděkování}\\}}
-	\noindent Prostor k poděkování (například vedoucímu práce).
+	\noindent Děkuji panu učiteli Mgr. Marcelu 
+Godovskému za jeho doporučení a půjčení testovacích součástek a panu učiteli Mgr. Markovi Lučnému za cené rady s webem.
 	
-	\vspace*{0.7\textheight} %% Vertikální mezeru je možné upravit
+	\vspace*{0.6\textheight} %% Vertikální mezeru je možné upravit
 
 %% Prohlášení - povinné
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -293,7 +289,7 @@ openright
 		\hspace{9.5cm} 
 		\begin{tabular}{@{}p{6cm}@{}}
 			\dotfill \\
-			Podpis autora
+		Podpis autora
 		\end{tabular}
 	\end{minipage}
 	
@@ -305,16 +301,15 @@ openright
 %% Abstrakt v češtině
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\noindent{\Large{\bfseries{Abstrakt}\\}}
-	\noindent Sem napíšeš svůj abstrakt.\\
-	Slouží jako pomoc čtenáři rychle se zorientovat v dané práci.\\
-	“Redukovaný text, který charakterizuje obsah dokumentu bez rozlišování autorství abstraktu, bez doplňkových informací, bez vlastní interpretace a hodnocení dokumentu (tj. nikoliv "v práci velmi dobře hodnotím podle mne zajímavý systém...", ale "práce hodnotí systém..."). Základními vlastnostmi anotace jsou výstižnost, přehlednost, jasnost, stručnost, přesnost, objektivnost a čtivost. Anotace je formulována v přirozeném jazyce – obvykle ve větách. Anotace může používat textových formulací z referovaného dokumentu, ale jako celek je formulován nově.“\\
-	Délka cca 100 – 250 slov
+	\noindent Tento projekt se zabývá vytvoření RC auta s využitím mikrokontrolérů ESP32 a Arduino. Hlavním cílem bylo implementovat možnost dálkového ovládání vozidla přes WiFi a přenosu obrazu z kamery. Přestože jsem úspěšně vytvořil funkční RC auto s manuálním ovládáním a sledováním, nezakomponoval jsem zde detekci překážek a automatický pohyb. Budoucí plány směřují k rozšíření těchto funkcí.
+ 
+  \noindent Komunikace s RC autem probíhá přes WiFi, kde uživatel zadává heslo k připojení. Po úspěšném připojení k síti pomocí mobilu nebo počítače zadává IP adresu, čímž se připojuje na server RC auta. Na obrazovce se okamžitě zobrazuje živý obraz z kamery, spolu s šipkami umožňujícími ovládání pohybu vozidla. Uživatel tak může intuitivně a v reálném čase ovládat RC auto prostřednictvím svého zařízení.
 	
 	\vspace{18pt}
 	
 	\noindent{\large{\bfseries{Klíčová slova}}}
 	
-	\noindent Šablona, \LaTeX, závěrečná práce, dokumentace, \dots 
+	\noindent RC auto, ESP32, Arduino, WiFi, vzdálené ovládání, kamera
 	
 	\vspace{18pt}
 
@@ -332,19 +327,16 @@ openright
 %% Stránka s úvodem - povinná část
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 	\chapter*{Úvod}
-%Tento příkaz vytvoří novou kapitolu s názvem "Úvod" ve vašem dokumentu.
-%Hvězdička * u příkazu \chapter* znamená, že tato kapitola nebude mít číslo. Ve výsledném dokumentu se tedy objeví jako "Úvod" bez předcházejícího čísla kapitoly, které se obvykle zobrazuje u číslovaných kapitol.
-%Tento příkaz také znamená, že kapitola se automaticky neobjeví v obsahu, protože LaTeX standardně zahrnuje do obsahu pouze číslované kapitoly.
 	\addcontentsline{toc}{chapter}{Úvod}
 %Tento příkaz ručně přidává záznam do obsahu.
 %První parametr toc označuje, že přidáváme záznam do Table of Contents (obsahu).
 %Druhý parametr chapter specifikuje úroveň záznamu. V tomto případě říkáme, že přidávaný záznam má být považován za kapitolu.
-%Třetí parametr Úvod je text, který se objeví v obsahu. V tomto případě bude v obsahu zobrazen název "Úvod".	
-Závěrečné studijní práce a jejich veřejné obhajoby jsou důležitou součástí vyvrcholení studia oboru informační technologie na \textit{Střední škole průmyslové a umělecké v Opavě}. Hlavním cílem je samostatně vypracovat komplexní, nejčastěji prakticky zaměřený projekt na vybrané téma z~oblasti ICT a napsat k tomuto projektu také příslušnou odbornou dokumentaci podle obecně platných pravidel. Nejúspěšnější studentské projekty bývají vybrány, aby školu reprezentovaly v soutěžních přehlídkách \emph{Středoškolské odborné činnosti} (dále SOČ), kde je pečlivá a přesná dokumentace rovněž vyžadována.
+%Třetí parametr Úvod je text, který se objeví v obsahu. V tomto případě bude v obsahu zobrazen název "Úvod".
+\noindent Od dětství mě fascinovala RC auta. Mým dlouholetým snem bylo sestavit vlastní RC auto a prozkoumat, jak mohu tuto technologii využít. Rozhodl jsem se uskutečnit svou touhu sestavit RC auto s možností ovládání přes WiFi a přenosem obrazu z kamery.
 
-Tento dokument vznikl se záměrem co nejvíce studentům usnadnit formální úpravu dokumentace k jejich odborné práci a poskytnout jim i dobré vodítko při strukturování samotného obsahu. Vzhledem k tomu, že příprava na vysokoškolské studium často vyžaduje znalost {\LaTeX}u, představujeme šablonu vytvořenou v této technologii, jejímž autorem je z velké části Jakub Dokulil a která byla původně určená pro soutěžící SOČ.  
+\noindent Cílem tohoto projektu bylo nejen vytvořit plně funkční RC auto, ale také se naučit proces sestavení a zapojení komponent. Klíčovou částí mé práce bylo propojení RC auta s WiFi serverem, což umožňuje vzdálené ovládání a sledování prostřednictvím kamery.
 
-První kapitola této práce obsahuje základní informace o~{\LaTeX}u; stručně se zmiňuje o jeho vývoji, ale hlavně se soustředí na základní principy, které je nezbytné znát při sestavování rozsáhlejších  textových dokumentů. Součástí této kapitoly je i výběr některých programových prostředků, které mohou výrazněji urychlit a usnadnit psaní zdrojového kódu {\LaTeX}u. V kapitole nazvané "Jak psát odbornou dokumentaci" jsou zdůrazněna nejdůležitější pravidla, jež by měla být dodržena při psaní (nejen) odborného textu, a to jak zásady týkající se obsahu, tak i formální stránky - pravopisné, typografické apod. Závěrečná kapitola se soustředí na praktické ukázky správného použití různých typů obsahu v odborné práci. 
+\noindent Během této dokumentace zahrnu sestavení RC auta, implementaci WiFi serveru a integraci kamery. Momentálně auto umožňuje ruční ovládání a sledování terénu. Mým plánem do budoucna je rozšířit funkcionalitu auta o detekci překážek a možnost automatického pohybu. Uvědomuji si, že tato funkce přinese další rozměr a zajímavost do projektu. V závěru se zaměříme na současný stav projektu, popsání dosažených cílů a ohodnocení odvedené práce.
 
 %Tipy k psaní úvodu
 %Je povinný, nadpis neměňte, rozsah - max. 1 strana. 
@@ -405,13 +397,17 @@ Pokracuj textem zde.
 
 \section{HARDWARE TECHNOLOGIE}
 
+\subsection{Schéma}
+napis zde.
+
+
 \subsection{Nahrávání kódu}
 napis zde.
 
 \subsection{Zoptimálnění funkčnosti ESP32}
 napis zde.
 
-	
+
 	\section[Základy]{Základy: Text, obrázky, tabulky a citace} %%[Text, který bude v obsahu]{Text, který se vytiskne na stránce} Zkus měnit jednotlivé závorky a uvidíš :) 
 	Psaní v \LaTeX{u} není žádná věda, stačí psát normálně do zdrojového souboru. Pokud bys chtěl psát obrážky či číslovaný seznam, pak můžeš použít prostředí \texttt{itemize} či \texttt{enumerate}. Často je důležité používat nezlomitelnou mezeru. Tu uděláš pomocí \verb|~|~(tildy). Pokud budeš chtít psát uvozovky použij příkaz \texttt{uv}, pomocí něj se ti vytvoří uvozovky podle příslušného jazyka. V česku tedy ve formátu 99 66. Použití příkazu najdeš níže v textu.
 	
