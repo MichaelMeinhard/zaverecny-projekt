@@ -1,14 +1,8 @@
-% ŠABLONA PRO PSANÍ ZÁVĚREČNÉ STUDIJNÍ PRÁCE
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Autor: Jakub Dokulil (kubadokulil99@gmail.com)
-% Tato šablona byla vytvořena tak, aby pomocí ní mohli v systému LaTeX soutěžící sázet své práce a zároveň odpovídala požadavkům na formátování vyplývajícím z wordové šablony umístěné na webu soc.cz.
-%
 \documentclass[12pt, a4paper,
 %oneside,      %% -- odkomentujte, pokud chcete svou práci mít pouze jednostrannou, mezera pro hřbet pak automaticky bude pouze na levé straně
 twoside,        %% -- pro oboustranné práce, mezera pro hřbet následně střídá strany.
-openright
+openany
 ]{report}
-
 %% Nutné balíčky a nastavení
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -76,7 +70,7 @@ openright
 \usepackage{esint}     %% pro sazbu různých integrálů (např \oiint)
 \usepackage{mathrsfs}
 \usepackage{mathptmx} % Times New Roman
-
+\usepackage{hyphenat}
 
 %% makra pro sazbu matematiky
 \newcommand{\dif}{\mathrm{d}} %% makro pro sazbu diferenciálu, místo toho
@@ -215,11 +209,8 @@ openright
 %% Začátek dokumentu
 %%%%%%%%%%%%%%%%%%%%
 \begin{document}
-	
-	\pagestyle{empty}
-	\pagenumbering{Roman}
-	
-	\cleardoublepage
+    \pagestyle{empty}
+	\clearpage
 
 %% Titulní stránka s informacemi
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -260,13 +251,11 @@ openright
 			\end{tabular}
 			
 		\end{table}		
-	}
-	
-\cleardoublepage
+	}	
+\clearpage
 	
 %% Stránka obsahující poděkování a prohlášení
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 %% Poděkování - nepovinné
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
@@ -286,22 +275,19 @@ Godovskému za jeho doporučení a půjčení testovacích součástek a panu u�
 	\noindent{V Opavě \datumOdevzdani\\}
 	\noindent
 	\begin{minipage}{\linewidth}
-		\hspace{9.5cm} 
+		\hspace{7.5cm} 
 		\begin{tabular}{@{}p{6cm}@{}}
 			\dotfill \\
 		Podpis autora
 		\end{tabular}
 	\end{minipage}
 	
-	\cleardoublepage %% Zalomení dvojstránky
+	\clearpage %% Zalomení
 
 %% Stránka obsahující abstrakt (anotaci)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
-
-%% Abstrakt v češtině
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\noindent{\Large{\bfseries{Abstrakt}\\}}
-	\noindent Tento projekt se zabývá vytvoření RC auta s využitím mikrokontrolérů ESP32 a Arduino. Hlavním cílem bylo implementovat možnost dálkového ovládání vozidla přes WiFi a přenosu obrazu z kamery. Přestože jsem úspěšně vytvořil funkční RC auto s manuálním ovládáním a sledováním, nezakomponoval jsem zde detekci překážek a automatický pohyb. Budoucí plány směřují k rozšíření těchto funkcí.
+	\noindent Tento projekt se zabývá vytvoření RC auta s využitím vývojové desky ESP32-CAM a Arduina. Hlavním cílem bylo implementovat možnost dálkového ovládání vozidla přes WiFi a přenosu obrazu z kamery. Přestože jsem úspěšně vytvořil funkční RC auto s manuálním ovládáním a sledováním, nezakomponoval jsem zde detekci překážek a automatický pohyb. Budoucí plány směřují k rozšíření těchto funkcí.
  
   \noindent Komunikace s RC autem probíhá přes WiFi, kde uživatel zadává heslo k připojení. Po úspěšném připojení k síti pomocí mobilu nebo počítače zadává IP adresu, čímž se připojuje na server RC auta. Na obrazovce se okamžitě zobrazuje živý obraz z kamery, spolu s šipkami umožňujícími ovládání pohybu vozidla. Uživatel tak může intuitivně a v reálném čase ovládat RC auto prostřednictvím svého zařízení.
 	
@@ -309,23 +295,39 @@ Godovskému za jeho doporučení a půjčení testovacích součástek a panu u�
 	
 	\noindent{\large{\bfseries{Klíčová slova}}}
 	
-	\noindent RC auto, ESP32, Arduino, WiFi, vzdálené ovládání, kamera
-	
-	\vspace{18pt}
-
+	\noindent RC auto, ESP32-CAM, Arduino, WiFi, vzdálené ovládání, kamera
+    \clearpage
 %% Stránka s generovaným obsahem
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
-        
         \setcounter{tocdepth}{3}  % Zahrnuje subsekce do obsahu
         \setcounter{secnumdepth}{3}  % Čísluje subsekce
-   
-	\tableofcontents %% Vygeneruje tabulku s obsahem
+        \fancypagestyle{originalplain}{
+  \fancyhf{}
+  \fancyfoot[C]{\thepage} % Example: put page number at center of footer.
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
 
-	\pagenumbering{arabic} %% Nastavení způsobu číslování stránek (alternativy roman | Roman)
-	\setcounter{page}{1} %% Nastavení počitadla stránek
-
+% Redefine the 'plain' page style to be empty
+\fancypagestyle{plain}{
+  \fancyhf{} % clear all header and footer fields
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+        \tableofcontents %% Vygeneruje tabulku s obsahem
+        \clearpage
+% Restore the standard 'plain' page style immediately after the ToC
+\fancypagestyle{plain}{%
+  % Restore the original 'plain' style definitions
+  \fancyhf{}
+  \fancyfoot[C]{\thepage} % Example: put page number at center of footer.
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+% Reset the page style to your preferred style for subsequent pages
+\pagestyle{originalplain} % or 'originalplain' if you want to use the saved 'plain' style    
 %% Stránka s úvodem - povinná část
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\chapter*{Úvod}
 	\addcontentsline{toc}{chapter}{Úvod}
 %Tento příkaz ručně přidává záznam do obsahu.
@@ -345,9 +347,22 @@ Godovskému za jeho doporučení a půjčení testovacích součástek a panu u�
 %* předem definované cíle práce, 
 %* motivaci pro další čtení textu včetně stručného uvedení obsahu následujících kapitol 
 
-
+\pagestyle{plain}
 \chapter{VÝROBA A SESTAVENÍ RC MODELU}
+\noindent Celý proces výroby a sestavování RC modelu započal výběrem vhodných součástek, což pro mě jako nováčka v tomto odvětví zabralo spoustu času. Musel jsem pečlivě vybírat, abych zajistil, že všechny součástky budou vzájemně kompatibilní a celý model bude spolehlivě fungovat.
+
+\noindent Původní plán vytisknout model auta 3D tiskárnou se změnil, když jsem objevil existující model, který nejenže splňoval mé požadavky, ale obsahoval i některé z potřebných součástek. To mi z části ušetřilo čas a zjednodušilo celý proces.
+
+\noindent Sestavování bylo krok po kroku, součástka po součástce. Dával jsem pozor na každý detail, aby vše bylo správně připojeno a pevně drželo. Ostatní součástky jsem testoval předtím, než jsem je úplně zapojil, abych se vyhnul pozdějším potížím.
+
+\noindent Až poté, co bylo vše fyzicky spojeno, přišla na řadu fáze programování. Začal jsem s jednoduchými příklady pro zobrazení obrazu z kamery. Pro programování jsem použil jazyk Arduino, což je kombinace jazyku C a C++. Na komunikaci s webem jsem potřeboval speciální balíčky, například AsyncTCP, který tvořil základ pro ESPAsyncWebServer. Design webového rozhraní jsem upravil s pomocí HTML, CSS a dalších technologií, které mi ulehčili zpříjemnit vzhled stránky.
+
 \chapter{PRINCIP VZDÁLENÉHO OVLÁDÁNÍ}
+\noindent Mým primárním cílem bylo navázat bezdrátovou komunikaci prostřednictvím WiFi. K tomu jsem využil mikrokontrolér ESP32 a Arduino, kde Arduino plnilo roli programátoru pro nahrávání kódu do ESP32. Zásadním krokem bylo vytvoření spojení se serverem. Ovladač (mobilní zařízení nebo počítač) se připojí k serveru přes WiFi po zadání přístupových údajů (hesla) se naváže spojení umožňující zadat IP adresu do prohlížece a zahájit komunikaci mezi ovladačem a modelem RC auta.
+
+\noindent Implementace ovládání vozidla byla následným krokem, kde na webovém rozhraní byla integrována šipková tlačítka umožňující pohyb vozidla vpřed, vzad, doprava a doleva. To vytvořilo intuitivní a snadno ovladatelný systém.
+
+
 \chapter{VYUŽITÉ TECHNOLOGIE}
 
 \section{HARDWARE}
@@ -358,17 +373,32 @@ V této kapitole se seznámíme s použitým hardware.
 \begin{itemize}
     \item Vývojová deska ESP32-CAM,
     \item H můstek L298N Dual H Most DC,
-    \item arduino MEGA 2560 Rev3,
+    \item Arduino MEGA 2560 Rev3,
     \item Hadex motorek 3-6V/0,17A s převodovkou, převod 1/48
     \item snímač otáček
     \item nepájivé pole
 \end{itemize}
 
 \subsection{ESP32-CAM}
-Hlavní výhodou používání.
+\noindent Základem mého projektu byla vývojová deska ESP32-CAM (obrázek č. 1). Poskytla mi opravdu skvělý způsob jak přidat vizuální prvek do mého projektu. Tato deska spojuje výkonný mikrokontrolér ESP32 s kamerovým modulem, což umožňuje snadné zachycení a zpracování obrazu. Díky flexibilním GPIO pinům, podpoře pro paměťové karty a jednoduchému programování pomocí Arduino IDE poskytuje ideální řešení pro mé potřeby. S integrovanou WiFi podporou je snadné přenášet data bezdrátově, což rozšiřuje možnosti komunikace a přenosu informací.
+\begin{figure}
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+		\includegraphics[width=\textwidth]{image/esp32.png}
+        \caption*{\textit{obrázek č. 1 ESP32-CAM}}
+        \label{fig:esp32}
+    \end{subfigure}
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image/esp32-pins.png}
+        \caption*{\textit{obrázek č. 2 Piny ESP32-CAM}}
+    \end{subfigure}     
+\end{figure}
 
 \subsection{L298N Dual H Most DC}
-Hlavní výhodou používání.
+\noindent V rámci mého projektu RC auta se H-můstek L298N stal důležitou součástí pro pohyb DC motorů. Jeho snadné zapojení a schopnost nezávislého ovládání obou motorů dodaly projektu potřebnou variabilitu pro dosažení plynulého pohybu vozidla.
+
+\noindent Během integrování H-můstku L298N do celkového systému jsem ocenil jeho přehledný design a spolehlivost. Jeho spolupráce s mikrokontrolérem umožnila programovat pohyb motorů tak, jak jsem si představoval. Vyzkoušel jsem i možnosti stanovení rychlosti motorů.
 
 \subsection{Arduino MEGA 2560 Rev3}
 Hlavní výhodou používání.
@@ -377,9 +407,7 @@ Hlavní výhodou používání.
 Hlavní výhodou používání.
 
 \section{SOFTWARE}
-\label{sec:zakladni_struktura}
-
-V této kapitole se podrobněji podíváme na.
+V této kapitole se podíváme na použitým software.
 
 \subsection{Použitý jazyk}
 Preambule je první částí každého.
@@ -404,7 +432,7 @@ napis zde.
 \subsection{Nahrávání kódu}
 napis zde.
 
-\subsection{Zoptimálnění funkčnosti ESP32}
+\subsection{Zoptimálnění funkčnosti ESP32-CAM}
 napis zde.
 
 
