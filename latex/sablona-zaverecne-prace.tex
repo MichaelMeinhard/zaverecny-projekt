@@ -1,6 +1,5 @@
 \documentclass[12pt, a4paper,
-%oneside,      %% -- odkomentujte, pokud chcete svou práci mít pouze jednostrannou, mezera pro hřbet pak automaticky bude pouze na levé straně
-twoside,        %% -- pro oboustranné práce, mezera pro hřbet následně střídá strany.
+oneside,      %% -- odkomentujte, pokud chcete svou práci mít pouze jednostrannou, mezera pro hřbet pak automaticky bude pouze na levé straně
 openany
 ]{report}
 %% Nutné balíčky a nastavení
@@ -62,6 +61,7 @@ openany
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \usepackage{pdfpages} %% Balíček umožňující vkládat stránky z PDF souborů, 
+\usepackage{float}
 
 \usepackage{upgreek} %% Balíček pro sazbu stojatých řeckých písmen, třeba u jednotky mikrometr. Například stojaté mí: \upmu, stojaté pí: \uppi
 
@@ -367,7 +367,7 @@ Godovskému za jeho doporučení a půjčení testovacích součástek a panu u�
 
 \section{HARDWARE}
 
-V této kapitole se seznámíme s použitým hardware.
+\noindent V této kapitole se seznámíme s použitým hardware.
 
 \subsection{Seznam součástek}
 \begin{itemize}
@@ -375,55 +375,74 @@ V této kapitole se seznámíme s použitým hardware.
     \item H můstek L298N Dual H Most DC,
     \item Arduino MEGA 2560 Rev3,
     \item Hadex motorek 3-6V/0,17A s převodovkou, převod 1/48
+    \item akumulátor HPI Plazma Ni-MH 7.2V 2000mAh 
     \item snímač otáček
     \item nepájivé pole
 \end{itemize}
 
 \subsection{ESP32-CAM}
 \noindent Základem mého projektu byla vývojová deska ESP32-CAM (obrázek č. 1). Poskytla mi opravdu skvělý způsob jak přidat vizuální prvek do mého projektu. Tato deska spojuje výkonný mikrokontrolér ESP32 s kamerovým modulem, což umožňuje snadné zachycení a zpracování obrazu. Díky flexibilním GPIO pinům, podpoře pro paměťové karty a jednoduchému programování pomocí Arduino IDE poskytuje ideální řešení pro mé potřeby. S integrovanou WiFi podporou je snadné přenášet data bezdrátově, což rozšiřuje možnosti komunikace a přenosu informací.
-\begin{figure}
+\begin{figure}[h]
     \begin{subfigure}{0.48\textwidth}
         \centering
 		\includegraphics[width=\textwidth]{image/esp32.png}
         \caption*{\textit{obrázek č. 1 ESP32-CAM}}
+        \label{fig:esp32}
     \end{subfigure}
     \begin{subfigure}{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{image/esp32-pins.png}
         \caption*{\textit{obrázek č. 2 Piny ESP32-CAM}}
+        \label{fig:esp32Pins}
     \end{subfigure}     
 \end{figure}
 
 \subsection{L298N Dual H Most DC}
-\noindent V rámci mého projektu RC auta se H-můstek L298N stal důležitou součástí pro pohyb DC motorů. Jeho snadné zapojení a schopnost nezávislého ovládání obou motorů dodaly projektu potřebnou variabilitu pro dosažení plynulého pohybu vozidla.
+    \noindent V rámci mého projektu RC auta se H-můstek L298N (obrázek č. 3) stal důležitou součástí pro pohyb DC motorů. Jeho snadné zapojení a schopnost nezávislého ovládání obou motorů dodaly projektu potřebnou variabilitu pro dosažení plynulého pohybu vozidla.
 
-\noindent Během integrování H-můstku L298N do celkového systému jsem ocenil jeho přehledný design a spolehlivost. Jeho spolupráce s mikrokontrolérem umožnila programovat pohyb motorů tak, jak jsem si představoval. Vyzkoušel jsem i možnosti stanovení rychlosti motorů.
- \begin{figure}[h]
+    \noindent Během integrování H-můstku L298N do celkového systému jsem ocenil jeho přehledný design a spolehlivost. Jeho spolupráce s mikrokontrolérem umožnila programovat pohyb motorů tak, jak jsem si představoval. Vyzkoušel jsem i možnosti stanovení rychlosti motorů.
+    \begin{figure}[H]
         \centering
-		\includegraphics[width=0.4\textwidth]{image/Hmustek.png}
+		\includegraphics[width=0.35\textwidth, height=4.5cm]{image/Hmustek.png}
         \caption*{\textit{obrázek č. 3 L298N Dual H Most DC}}
+        \label{fig:hMustek}
     \end{figure}
 
 \subsection{Arduino MEGA 2560 Rev3}
-Hlavní výhodou používání.
+\noindent Původně jsem plánoval využít Arduino MEGA 2560 Rev3 jako hlavní řídící jednotku pro mé RC auto. Nicméně, během průběhu projektu jsem se rozhodl pro interaktivnější přístup a zvolil jsem ESP32-CAM. Arduino MEGA 2560 Rev3 jsem nakonec využil pouze jako programátor pro nahrávání kódu do ESP32-CAM. Jeho schopnosti, jako bohatý počet digitálních a analogových pinů (obrázek č. 4), spolu s rozsáhlou pamětí, mi poskytly spolehlivý nástroj pro efektivní práci s ESP32-CAM a programování v Arduino IDE.
+\begin{figure}[H]
+        \centering
+		\includegraphics[width=0.48\textwidth]{image/arduionoPins.png}
+        \caption*{\textit{obrázek č. 4 Piny Arduino MEGA }}
+        \label{fig:arduino}
+    \end{figure}
 
 \subsection{Hadex motorek 3-6V/0,17A}
-Hlavní výhodou používání.
+\noindent Pro pohyb mého RC auta jsem se rozhodl využít Hadex motorek 3-6V/0,17A s převodovkou. Tyto motorky nabízejí optimální kombinaci výkonu a efektivity, ideální pro plynulý pohyb vozidla. S napětím 3-6V a proudem 0,17A poskytují spolehlivý výkon. Převodovka s poměrem 1/48 přináší možnost jemného nastavení rychlosti a výkonu.
+
+\subsection{HPI Plazma Ni-MH 7,2V 2000mAh}
+\noindent Posledním kouskem mého RC auta byl pečlivě vybraný akumulátor HPI Plazma 2000mAh NiMH 7,2V (obrázek č. 5). S kapacitou 2000mAh poskytuje dlouhý provoz. Je ideální pro rozsáhlé závody nebo delší dojížďky. Jeho technologie NiMH zajišťuje spolehlivý pohon motorů a odolný design je připraven i na náročnější terény. Hlavně tato baterie dodává mému RC autu potřebnou energii pro maximální výkon.
+\begin{figure}[H]
+        \centering
+		\includegraphics[width=0.48\textwidth]{image/akumulator.png}
+        \caption*{\textit{obrázek č. 5 HPI Plazma Ni-MH 7,2V 2000mAh}}
+        \label{fig:akumulator}
+    \end{figure}
 
 \section{SOFTWARE}
-V této kapitole se podíváme na použitým software.
+\noindent V této kapitole se podíváme na použitým software.
 
 \subsection{Použitý jazyk}
-Preambule je první částí každého.
+\noindent Pro mé RC auto jsem použil programovací jazyk Arduino, který nabízí efektivní a snadný způsob psaní kódu pro mikrokontroléry. Jazyk Arduino vychází z C a C++, ale je přizpůsoben pro jednoduchost a srozumitelnost i pro začátečníky v programování. Díky své intuitivní syntaxi a podpoře komunity se stal nepostradatelným nástrojem pro vytváření elektronických projektů.
 
 \subsection{Arduino IDE}
-Preambule je první částí každého.
+\noindent Pro psání kódu jsem využil vývojové prostředí Arduino IDE 2.2.2 bylo pro můj projekt klíčové. Jeho integrovaný editor kódu, podporující automatické doplňování, výrazně usnadnil psaní kódu. Toto užitečné funkce nejen zvýšily efektivitu mé práce, ale také minimalizovaly chyby v kódu. 
 
 \subsection{Web Server}
-Preambule je první částí každého.
+\noindent Využil jsem knihovnu ESPAsyncWebServer pro implementaci WebServeru na mikrokontrolér ESP32. Tato knihovna poskytuje asynchronní zpracování webových požadavků. Pro zlepšení rozhraní jsem využil moderní webové technologie, včetně HTML, CSS a JavaScriptu. Na stránce jsou tlačítka pro ovládání pohybu vozidla a posuvník pro nastavení intenzity světela.
 
 \subsection{WebSocket komunikace}
-Pokracuj textem zde.
+\noindent V projektu jsem využil WebSocket komunikaci s knihovnou ESPAsyncWebServer, což umožnilo rychlou a efektivní výměnu dat mezi mikrokontrolérem a webovým rozhraním. K posílání funkcí a interaktivnímu ovládání na straně webového rozhraní jsem implementoval JavaScript, což poskytuje uživatelům schopnost aktivně ovládat a komunikovat s mikrokontrolérem přes webové rozhraní.
 
 \chapter{POUŽITÉ POSTUPY A ŘEŠENÍ}
 
@@ -431,7 +450,6 @@ Pokracuj textem zde.
 
 \subsection{Schéma}
 napis zde.
-
 
 \subsection{Nahrávání kódu}
 napis zde.
@@ -581,18 +599,17 @@ napis zde.
 	
 	Věřím, že se sazbou matematiky ti pomůže tvůj školitel, případně mi můžeš napsat (mail je v úvodu). Jednotlivé funkcionality spolu se seznamem znaků nalezneš jednak v Ne příliš stručném úvodu~\cite{LaTeXprirucka} nebo na Wikibooks v sekcích \emph{Mathematics} a \emph{Advanced mathematics}~\cite{wikibooksLaTeX}.
 	
-	
-	
-	
-	\chapter{Když dokončuji práci}
-	
-	Každou práci je dobré zkontrolovat, aby v ní nebyly pravopisné chyby, nebyla těžkopádně napsaná -- byla čtivá -- a neobsahovala žádný typografický nedostatek. Proto, když práci sepíšeš, nech ji chvilku odležet, třeba týden. Pak si ji po sobě znovu přečti. Hned uvidíš, kolik věcí bys napsal jinak případně kde tě bije do očí jaká chyba. Dej práci přečíst také svému školiteli a případně češtináři. Zajistíš tak, že bude obsahovat méně chyb.
-	
-	Pak můžeš práci vytisknout a hurá do soutěže.
-	
+	\chapter{Výsledky řešení}
+
+    \section{Podoba RC auta}
+    \noindent RC auto momentálně představuje funkční jednotku s minimalistickým vzhledem. Pro dosažení esteticky poutavější podoby a zároveň zvýšení odolnosti plánuji přidat karosérii. Aktuálně je vozidlo křehké. To chci vyřešit přidáním karosérie. Do budoucna mám v úmyslu lépe organizovat součástky tak, aby se snadněji aplikovala karosérie. Toto uspořádání by mělo zohledňovat nejen estetiku, ale také praktičnost údržby. Také bych chtěl optimalizovat rozmístění drátků, které v současné době občas mohou narušit chod auta a vadit objektivu kamery. Mým cílem je zajistit bezproblémový provoz a zvýšit celkovou spolehlivost RC auta.
+    
+    \section{Podoba web serveru}
+
+    \noindent Web server splňuje svůj účel, umožňuje snadné ovládání mého RC auta. Připojení k serveru je jednoduché - stačí se připojit k WiFi pomocí hesla a zadat správnou IP adresu do vyhledávače. Ihned se ocitneme v interaktivním rozhraní. Současný design webové stránky zaručuje plnou responzivitu, což umožňuje pohodlný přístup nejen z počítačů, ale také z mobilních zařízení. Díky integrované kameře máme možnost sledovat skutečný obraz z kamery.
+ 
 	\chapter*{Závěr}
-	
-	Věřím, že jsem ti spolu se šablonou poskytl několik tipů, jak napsat práci. Ať už jde o úplné začátky s \LaTeX{}em. Či ukázku toho, co vše s ním zvládneš. Pokud bys měl k šabloně libovolné dotazy, rouhodně se na mě obrať. \LaTeX tvé práci dodá určitou krásu, tak doufám, že ti dodá sebevědomí a uspěješ při souteži. A i kdyby ne vzpomeň si, kolik ses toho musel naučit a hned uvidíš o jaký kus ses posunul.
+	\noindent Hlavní cíle mého projektu zahrnovaly sestavení funkčního RC auta, jeho dálkové ovládání přes WiFi a přenos obrazu z kamery. Zadané cíle byly s úspěchem dosaženy. RC auto bylo úspěšně sestaveno a vybaveno funkcemi dálkového ovládání a přenosu obrazu z kamery. I když se v průběhu projektu objevily další nápady, jako je detekce překážek a automatický pohyb, ty jsou plánovány pro budoucí vylepšení. Rovněž se zamýšlím nad vylepšením vizuálního designu auta, ale nepodařilo se mi aplikovat plánovaný model. Projekt byl pro mě inspirativní a přinesl spoustu výzev, ačkoli ne všechny části byly dokončeny podle původního plánu.
 	
 	%% literatura
 	\begin{thebibliography}{99}
@@ -607,8 +624,6 @@ napis zde.
 	
 	%% obrázky 
 	\listoffigures
-	
-	%% tabulky
 	\listoftables
 	
 	\appendix %% začínají přílohy
