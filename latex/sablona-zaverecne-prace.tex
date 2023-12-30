@@ -59,7 +59,6 @@ openany
 
 %% Balíčky co se můžou hodit :) 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \usepackage{pdfpages} %% Balíček umožňující vkládat stránky z PDF souborů, 
 \usepackage{float}
 
@@ -157,6 +156,34 @@ openany
 	upquote=true  % requires textcomp	
 }
 
+\lstdefinestyle{Arduino}{
+backgroundcolor=\color{mywhite},   
+  basicstyle=\footnotesize,       
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                   
+  commentstyle=\color{mygray},    
+  deletekeywords={...},           
+  escapeinside={\%*}{*)},          
+  extendedchars=true,              
+  frame=shadowbox,                    
+  keepspaces=true,                 
+  keywordstyle=\color{myorange},       
+  language=Octave,                
+  morekeywords={*,...},            
+  numbers=left,                    
+  numbersep=5pt,                   
+  numberstyle=\tiny\color{mygray}, 
+  rulecolor=\color{black},         
+  rulesepcolor=\color{myblue},
+  showspaces=false,                
+  showstringspaces=false,          
+  showtabs=false,                  
+  stepnumber=2,                    
+  stringstyle=\color{myorange},    
+  tabsize=2,
+  title=\lstname
+}
 
 \lstdefinestyle{JSES6Base}{
 	backgroundcolor=\color{white},
@@ -449,156 +476,62 @@ Godovskému za jeho doporučení a půjčení testovacích součástek a panu u�
 \section{HARDWARE TECHNOLOGIE}
 
 \subsection{Schéma}
-napis zde.
-
+\noindent Jako první jsem se zaměřil na propojení motorů s H-můstkem pro ovládání pohybu. Každý motor byl připojen k určeným pinům pro otáčení vzad a vpřed. Kamera ESP32-CAM byla také integrována do H-můstku, ale bylo třeba upravit některé kabely kvůli optimálnímu propojení, zejména v oblasti spojení s GND, kde jsem potřeboval zapojit i GND z baterie. Abych zajistil správné napájení kamery, použil jsem zdroj proudu z baterie s napětím 7,2 V, následně jsem snížil napětí na 5 V pro kameru pomocí pinu na H-můstku. 
+\begin{figure}[H]
+        \centering
+		\includegraphics[width=0.6\textwidth]{image/schema.png}
+        \caption*{\textit{obrázek č. 6 Schéma}}
+        \label{fig:shema}
+    \end{figure}
+    
 \subsection{Nahrávání kódu}
-napis zde.
+\noindent Během nahrávání kódu do ESP32-CAM jsem využíval Arduino Mega jako programátor. Pro tento účel bylo zapotřebí specifického zapojení (viz obrázek č. 7), přičemž každý nahrávací cyklus vyžadoval ruční reset ESP32-CAM ze zadní strany. Tento postup však značně zpomaloval celý proces. Mým doporučením je použití ESP32-CAM-MB, i když v mém konkrétním projektu jsem tento modul bohužel nenasadil.
+\begin{figure}[h]
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+		\includegraphics[width=\textwidth]{image/schemaNahrani.png}
+        \caption*{\textit{obrázek č. 7 Schéma arduiono a esp32-cam}}
+        \label{fig:schemaArduino}
+    \end{subfigure}
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image/nahravaniVPraxi.png}
+        \caption*{\textit{obrázek č. 8 Ukazka nahravani v praxi}}
+        \label{fig:nahraniVPraxi}
+    \end{subfigure}     
+\end{figure}
 
-\subsection{Zoptimálnění funkčnosti ESP32-CAM}
-napis zde.
+\subsection{Definice proměných a knihoven}
+\noindent Pro ovládání motorů jsem vytvořil strukturu MOTOR PINS a v ní definovat vektor motorPins, který obsahuje informace o pinech pro každý motor. Pomocí PWM signálu mám možnost plynule upravovat rychlost motorů podle potřeby. Abych dosáhl optimálního řízení, nastavil jsem konstanty pro frekvenci (PWMFreq) a rozlišení (PWMResolution) PWM signálu. Dále jsem provedl inicializaci pinů sloužících k řízení rychlosti motorů a přiřadil je k odpovídajícím PWM kanálům.
+\begin{figure}[H]
+		\includegraphics[width=0.6\textwidth]{image/kod1.png}
+        \caption*{\textit{obrázek č. 9 Ukazka kodu připojení potřebných knihoven}}
+        \label{fig:kod1}
+    \end{figure}
+\begin{figure}[H]
+	\includegraphics[width=0.6\textwidth]{image/kod2.png}
+    \caption*{\textit{obrázek č. 9 Ukazka definice proměných}}
+    \label{fig:kod2}
+\end{figure}
 
+\subsection{Řešení ovládání vozidla}
+\noindent Ovládání pohybu vozidla jsem implementoval pomocí dvou funkcí. První z nich, rotateMotor(), umožňuje kontrolu otáčení motorů podle zadaného směru. Využívá předem definovanou strukturu MOTOR PINS a vektor motorPins, který obsahuje informace o pinech pro každý motor.
 
-	\section[Základy]{Základy: Text, obrázky, tabulky a citace} %%[Text, který bude v obsahu]{Text, který se vytiskne na stránce} Zkus měnit jednotlivé závorky a uvidíš :) 
-	Psaní v \LaTeX{u} není žádná věda, stačí psát normálně do zdrojového souboru. Pokud bys chtěl psát obrážky či číslovaný seznam, pak můžeš použít prostředí \texttt{itemize} či \texttt{enumerate}. Často je důležité používat nezlomitelnou mezeru. Tu uděláš pomocí \verb|~|~(tildy). Pokud budeš chtít psát uvozovky použij příkaz \texttt{uv}, pomocí něj se ti vytvoří uvozovky podle příslušného jazyka. V česku tedy ve formátu 99 66. Použití příkazu najdeš níže v textu.
-	
-	Občas je zapotřebí \LaTeX{u} pomoct při rozdělování slov. To se udělá snadno vložením symbolů \verb|\-| mezi jednotlivé slabiky.
-	
-	\subsection{Tabulky}
-	
-	U tabulek platí to stejné co u obrázků. Zarovnávají se na střed a nechávají se \uv{plavat} v textu. Tabulka narozdíl od textu, má popisek nahoře. U tabulky \ref{tab:ukazka} je použit balíček \texttt{booktabs}, pomocí kterého je celá tabulka naformátovaná.
-	
-	Seznam jak obrázků tak tabulek je pak vytvořen pomocí příkazů \texttt{listoftables} a~\texttt{list\-of\-fig\-ures} na konci práce před literaturou.
-	
-	\begin{table}[h]
-		\caption{Tato tabulka slouží jako ukázka toho, jak mohou tabulky vypadat.} %% popisek se u tebaluky píše nad ní
-		\label{tab:ukazka} %% označení pro pozdější odkazování se 
-		\centering
-		\begin{tabular}{lll}
-			\toprule %% příkazy z balíčku booktabs
-			záhlaví& této & tabulky\\
-			\midrule
-			obsah&tabulky& už\\
-			není & oddělený &čarami\\
-			\bottomrule
-		\end{tabular}
-	\end{table}
-	
-	
-	\subsection{Obrázky}
-	
-	U obrázků je dobré používat vektorové formáty, pokud to jde. \LaTeX se nejvíc kamarádí s formátem PDF. Do známého PDFka lze z jiných vektorových formátů (ať už SVG či ESP) obrázky přenést snadno pomocí grafických programů, jako je třeba Inkscape. \LaTeX si rozhodně poradí i s tradičními formáty PNG a JPG, avšak tyto obrázky mohou zabírat více prostoru a při tisku se může projevit nižší rozlišení obrázků. Pokud chceš používat tyto obrázky, rozhodně měj na paměti, aby měli rozlišení alespoň 250 indálně 330 ppi.
-	
-	Obrázky se vkládají do prostředí \texttt{figure}, při úpravě šířky je možné krom tradičních jednotek jako cm nebo mm použít také jako jednotku šířku stránky \texttt{textwidth} to se hodí zejména když chceš mít více podobrázků. 
-	
-	U každého obrázku je důležité aby měl popisek, \texttt{caption}. Do popisku napiš, co na obrázku je, případně nějaký další popis, tak aby čtenář následně neměl sebemenší pochybnost. U obrázků co nejsou tvoje nezapomeň an citaci. Jinak by to totiž znamenalo, že jsi obrázek dělal ty sám, což není etické přivlastňovat si cizí díla. Popisek obrázku je věta, proto musí vždy končit tečkou.
-	
-	\begin{figure}[h!]
-		\centering %% příkaz, který ti obrázek zarovná na střed
-		\includegraphics[width=0.6\textwidth]{image/logo-skoly.png} %% vložení samotného obrátku
-		\caption{Logo SŠPU Opava \cite{sspuLogo}.} %% popisek obrázku, nezapomeň na citace!
-		\label{fig:logoSSPU} %% označení až budeš chtít na obrázek odkazovat
-	\end{figure}
-	
-	Když chceš odkazovat na obrázek, stačí pak už jen napsat příkaz \texttt{ref} a do závorek napsat označení obrázku. Třeba logo SOČky, můžeš vidět na obrázku \ref{fig:logoSSPU} \cite{socSSPU}.
-	
-	
-	\begin{figure}[h!] \centering
-		\begin{subfigure}[h]{0.63\textwidth} %%prostředí pro podobrázek {šířka podobrázku}
-			\includegraphics[width=\textwidth]{image/vysledek_10} 
-			\caption{} %% aby se ti vysázelo označení obrázku.
-		\end{subfigure}
-		\begin{subfigure}[h]{0.63\textwidth}
-			\includegraphics[width=\textwidth]{image/vysledek_20}
-			\caption{}
-		\end{subfigure}
-		\caption[Graf závislosti rotace DH PSF $\Delta\varphi$ na defokusaci objektivu $\Delta z$.]{Graf závislosti rotace DH PSF $\Delta\varphi$ na defokusaci objektivu $\Delta z$, (a) při použití objektivu Plan Fluor 10, (b) při použití objektivu Plan Fluor 20. Měřená data (žluté body) jsou lineárně proloženy (přerušovaná přímka). }
-		\label{fig:rotace_grafy}
-	\end{figure}
-	
-		Pokud bys měl více podobrázků přichází do hry balíček \texttt{subcaption}. Pomocí něj lze vysázet i podobrázky. U podobrázků se popisek píše pouze jeden, dolů. Je v tomto připadě vhodné použít navíc hranaté závorky, do nichž se napíše kratší popisek, který se následně ukáže v seznamu obrázků.
-	
-	Všimni si, že obrázky jsou naschvál široké. Je to proto, aby byly dobře čitelné. Také si všimni popisku grafů. Ačkoli nejspíš netušíš co je to DH PSF či defokusace objektivu mělo by ti být jasné, že je důležité přesně graf popsat. To znamená co je na vodorovné ose, co je na svislé ose. V jakých jednotkách veličiny jsou. Které body co znamenají, která křivka má jaký význam. Napsat samotné \uv{$\Delta \varphi$} je málo, vždy raději připoměň, co daná značka znamená.
-	
+\noindent Druhou funkcí je moveCar(), která přebírá vstupní hodnotu a na základě ní řídí pohyb vozidla. Používá funkci rotateMotor pro nastavení různých směrů pohybu, jako jsou nahoru, dolů, doleva a doprava. Při příjmu hodnoty UP nebo DOWN jsou oba motory nastaveny tak, aby se vozidlo pohybovalo vpřed nebo vzad. Při směrech LEFT a RIGHT jsou motory nakonfigurovány tak, aby vozidlo rotujícím způsobem změnilo směr.
 
-	
-	\subsection{Literatura}
-	
-	V \LaTeX{}u lze dělat seznam literatury dvěma způsoby. V této šabloně jsem použil ten, kdy se seznam literatury píše přímo do práce. Pro jeho vygenerování doporučuji použít některý z generátarů, jako jsou například Citace PRO \cite{citacePRO}. Pomocí citací lze vygenerovat přímo dokument, který se pak už jen překopíruje do textu a člověk nemusí nic zvýrazňovat. Dále lze využít Bibtex, který rozhodně do budoucna hodlám zaimplementovat do šablony, avšak jeho použití nemusí být tak přátelské k začátečníkům.
-	
-	Pokud bys chtěl odkazovat na vícero zdrojů stačí je napsat vedle sebe oddělené čárkou \cite{LaTeXprirucka, citacePRO, Born2019}. Případně můžu odkaz na konkrétní stránku dát do hranatých závorek, viz \cite[str.~1]{Born2019}
-	
-	\subsection{Programový kód}
-	Pro vložení programového kódu do dokumentu LaTeX s možností zvýraznění syntaxe můžete použít balíček \texttt{listings}. Tento balíček nabízí široké možnosti pro formátování kódu, včetně zvýraznění syntaxe pro různé programovací jazyky.
-	
-	Nejprve je třeba do preambule LaTeX dokumentu přidat \texttt{\\usepackage{listings}} a nastavit příslušné parametry. Příklad nastavení pro jazyk Python by mohl vypadat takto:
-	
+\section{Web server}
+\subsection{Zpracování dat}
+\noindent V další části kódu se starám o komunikaci mezi webovým rozhraním a vozidlem. Funkce onCarInputWebSocketEvent() je vyvolána při různých událostech spojených s WebSocket. Když se klient připojí, ukládají se informace o připojení. Pokud klient odejde, zastaví se pohyb vozidla a vypne se světlo. Funkce initCarInputWebSocket() inicializuje WebSocket pro příjem ovládacích příkazů od klienta. Při připojení klienta jsou automaticky nastaveny výchozí hodnoty rychlosti a světla vozidla. Ve smyčce loop() neustále komunikuji přes WebSocket a čistím nepoužívané klienty. Ovládání vozidla je obsaženo ve funkci moveCar(), kde jsou na základě příchozích hodnot řízeny pohyby vozidla.
 
-\begin{lstlisting}[style=Python, caption={Ukázka Python kódu}]
-	# Python code here
-	def hello_world():
-		print("Hello, world!")
-\end{lstlisting}
+\subsection{Vzhled}
+\noindent Webové rozhraní obsahuje obrazový prvek pro zobrazení kamery a tlačítka pro ovládání vozidla, umístěná uvnitř kontejneru. Rozhraní je stylizováno pomocí CSS, které zajištujě reponzivitu. Pro ovládání pohybu vozidla jsou k dispozici čtyři tlačítka (nahoru, dolů, doleva, doprava), která jsou implementována jako HTML tlačítka s ikonami SVG. Každé tlačítko reaguje na interakci s myší nebo dotykem na dotykovém zařízení. Kromě ovládání pohybu vozidla jsou k dispozici další prvky, jako posuvník pro nastavení intenzity světla na vozidle.
+\begin{figure}[H]
+    \centering
+	\includegraphics[width=0.6\textwidth, height=5.5cm]{image/webscreen.png}
+    \caption*{\textit{obrázek č. 10 Jednoduchá ukázka webu bez obrazu kamery}}
+    \label{fig:webDesign}
+\end{figure}
 
-
-\begin{lstlisting}[style=JavaScript, title={Kód}, caption={Ukázka JS kódu}]
-	// JavaScript code here
-	function helloWorld() {
-		console.log("Hello, world!");
-	}
-\end{lstlisting}	
-	
-\begin{lstlisting}[style=ES6, caption={ES6 (ECMAScript-2015) Listing}]
-	/* eslint-env es6 */
-	/* eslint-disable no-unused-vars */
-	
-	import Axios from 'axios'
-	import { BASE_URL } from './utils/api'
-	import { getAPIToken } from './utils/helpers'
-	
-	export default class User {
-		constructor () {
-			this.id = null
-			this.username = null
-			this.email = ''
-			this.isActive = false
-			this.lastLogin = ''  // ISO 8601 formatted timestamp.
-			this.lastPWChange = ''  // ISO 8601 formatted timestamp.
-		}
-	}
-	
-	const getUserProfile = async (id) => {
-		let user = new User()
-		await Axios.get(
-		`${BASE_URL}/users/${id}`,
-		{
-			headers: {
-				'Authorization': `Token ${getAPIToken()}`,
-			}
-		}
-		).then{response => {
-				// ...
-			}).catch(error => {
-				// ...
-			})
-		}
-\end{lstlisting}	
-	
-	\section[Pokročilejší tipy]{Pokročilejší tipy, které se mohou hodit}
-	
-	\subsection{Rovnice}
-	
-	Sazba matematiky je věda sama o sobě. Ačkoli Word prošel obrovskou změnou a je v~tomto mnohem lepší, tak \LaTeX je pro to přímo (ještě jsem neviděl matematika, co by používal Word). Spolu s balíčky \texttt{amsmath} a \texttt{amsfonts} snad neexistuje nic, co by se používalo a \LaTeX by to nezvládl. Ať už jde o základní věci jako řecká písmenka -- $\alpha, \beta, \gamma, \dots$ -- integrály -- $\int_{l_i}^{l_f} \tau \dif l $ -- až třeba po speciální písmena -- $\mathscr{F}: \mathbb{R}^n \to \mathbb{R}^m$. Pro případ, že bys potřeboval nějaké speciální integrály, je tu balíček \texttt{esint}, pomocí něj můžeš napsat třeba
-	$$ \oiint_{S(V)} \vec{E} \cdot \dif \vec{S} = \iiint_{V} \left(\vec{\nabla} \cdot \vec{E}\right) \dif V .$$
-	
-	Jak můžeš vidět tak rovnice lze psát jednak do textu a nebo pokud se jedná o nějakou důležitou nebo rozsáhlejší rovnici tak na samostatný řádek. Pokud je rovnice opravdu důležitá, tak je vhodné ji také číslovat. Pak se na ni můžeš dále odkazovat v textu.
-	\begin{equation}
-		\vec{F} = m \vec{a}
-		\label{eq:newton2}
-	\end{equation}
-	\dots Například podle druhého Newtonova zákona, rovnice (\ref{eq:newton2}) \dots Zároveň je vždy nutné vysvětlit co která veličina znamená. V tomto případě bych napsal, že v druhém Newtonově zákoně vektor síly $\vec F$ odpovídá součinu hmotnosti tělesa $m$ a jeho zrychlení $\vec a$. 
-	
-	Věřím, že se sazbou matematiky ti pomůže tvůj školitel, případně mi můžeš napsat (mail je v úvodu). Jednotlivé funkcionality spolu se seznamem znaků nalezneš jednak v Ne příliš stručném úvodu~\cite{LaTeXprirucka} nebo na Wikibooks v sekcích \emph{Mathematics} a \emph{Advanced mathematics}~\cite{wikibooksLaTeX}.
-	
 	\chapter{Výsledky řešení}
 
     \section{Podoba RC auta}
@@ -613,26 +546,9 @@ napis zde.
 	
 	%% literatura
 	\begin{thebibliography}{99}
-		\bibitem{sablonaSOC} DOKULIL Jakub. \textit{Šablona pro psaní SOČ v programu \LaTeX} [Online]. Brno, 2020 [cit. 2020-08-24]. Dostupné z: \url{https://github.com/Kubiczek36/SOC_sablona}
-		\bibitem{LaTeXprirucka}OETIKER, Tobias, Hubert PARTL, Irene HYNA, Elisabeth SCHEGL, Michal KOČER a Pavel SÝKORA. \textit{Ne příliš stručný úvod do systému LaTeX2e} [online]. 1998 [cit. 2020-08-24]. Dostupné z: \url{https://www.jaroska.cz/elearning/informatika/typografie/lshort2e-cz.pdf}
-		\bibitem{wikibooksLaTeX}\textit{Wikibooks: LaTeX} [online]. San Francisco (CA): Wikimedia Foundation, 2001- [cit. 2020-08-24]. Dostupné z: \url{https://en.wikibooks.org/wiki/LaTeX}
-		\bibitem{stackExchange} \textit{TeX - LaTeX Stack Exchange} [online]. Stack Exchange, 2020 [cit. 2020-09-01]. Dostupné z: \url{https://tex.stackexchange.com}
 		\bibitem{sspuLogo} \textit{Střední škola průmyslová a umělecká Opava} [online]. [cit. 2023-11-11]. Dostupné z: \url{https://www.sspu-opava.cz}
-		\bibitem{citacePRO}\textit{Citace PRO} [online]. Citace.com, 2020 [cit. 2020-08-31]. Dostupné z: \url{https://www.citacepro.com}
-		\bibitem{Born2019} BORN, Max a Emil WOLF. \textit{Principles of optics: electromagnetic theory of propagation, interference and diffraction of light}. 7th (expanded) edition. Reprinted wirth corrections 2002. 15th printing 2019. Cambridge: Cambridge University Press, 2019. ISBN 978-0-521-64222-4.
 	\end{thebibliography}
 	
-	%% obrázky 
-	\listoffigures
-	\listoftables
-	
-	\appendix %% začínají přílohy
-	
-	\titleformat{\chapter}[block]{\scshape\bfseries\LARGE}{Příloha \thechapter}{10pt}{\vspace{0pt}}[\vspace{-22pt}] %% nastavení nadpisu u příloh
-	
-	
-	\chapter{%Příloha A 
-		Spot diagramy a další }
-	
+	\chapter*{Seznam příloh}
 	
 \end{document}
