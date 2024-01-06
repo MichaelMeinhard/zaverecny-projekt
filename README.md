@@ -19,3 +19,8 @@
 - Akumulátor HPI Plazma Ni-MH 7.2V 2000mAh 
 - Ultrazvukový měřič vzdálenosti pro Arduino - 5Pin HY-SRF05 (Zatím nepoužito)
 - Infračervený senzor překážek (Zatím nepoužito)
+
+## Turoriály
+- https://www.youtube.com/watch?v=k_PJLkfqDuI&t=759s&ab_channel=MaxImagination
+- https://www.youtube.com/watch?v=Sb08leLWOgA&ab_channel=DavyWybiral
+- https://www.youtube.com/watch?v=q-KIpFIbRMk&t=45s&ab_channel=TechStudyCell
