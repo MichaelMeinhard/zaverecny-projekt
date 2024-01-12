@@ -156,33 +156,45 @@ openany
 	upquote=true  % requires textcomp	
 }
 
-\lstdefinestyle{Arduino}{
-backgroundcolor=\color{mywhite},   
-  basicstyle=\footnotesize,       
-  breakatwhitespace=false,         
-  breaklines=true,                 
-  captionpos=b,                   
-  commentstyle=\color{mygray},    
-  deletekeywords={...},           
-  escapeinside={\%*}{*)},          
-  extendedchars=true,              
-  frame=shadowbox,                    
-  keepspaces=true,                 
-  keywordstyle=\color{myorange},       
-  language=Octave,                
-  morekeywords={*,...},            
-  numbers=left,                    
-  numbersep=5pt,                   
-  numberstyle=\tiny\color{mygray}, 
-  rulecolor=\color{black},         
-  rulesepcolor=\color{myblue},
-  showspaces=false,                
-  showstringspaces=false,          
-  showtabs=false,                  
-  stepnumber=2,                    
-  stringstyle=\color{myorange},    
-  tabsize=2,
-  title=\lstname
+\lstdefinelanguage{arduino}{
+  morekeywords=[1]{setup, loop, delay, pinMode, digitalWrite, digitalRead, Serial, begin, print, println},
+  morekeywords=[2]{int, char, long, byte, short, unsigned, void, boolean},
+  morekeywords=[3]{HIGH, LOW, INPUT, OUTPUT, INPUT_PULLUP, true, false},
+  morekeywords=[4]{Serial, Serial1, Serial2, Serial3},
+  sensitive=false,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]",
+}
+
+\lstset{
+  language=arduino,
+  basicstyle=\ttfamily\small,
+  keywordstyle=[1]\color{blue}\bfseries,
+  keywordstyle=[2]\color{teal},
+  keywordstyle=[3]\color{purple},
+  keywordstyle=[4]\color{orange},
+  commentstyle=\color{green!50!black},
+  stringstyle=\color{red},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  stepnumber=1,
+  numbersep=5pt,
+  frame=single,
+  breaklines=true,
+  showstringspaces=false,
+  captionpos=b,
+}
+
+\lstdefinelanguage{Arduino}{
+  morekeywords=[1]{setup, loop, delay, pinMode, digitalWrite, digitalRead, Serial, begin, print, println},
+  morekeywords=[2]{int, char, long, byte, short, unsigned, void, boolean},
+  morekeywords=[3]{HIGH, LOW, INPUT, OUTPUT, INPUT_PULLUP, true, false},
+  morekeywords=[4]{Serial, Serial1, Serial2, Serial3},
+  sensitive=false,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]",
 }
 
 \lstdefinestyle{JSES6Base}{
@@ -264,7 +276,7 @@ backgroundcolor=\color{mywhite},
 		
 		\begin{figure}[h]
 			\centering
-			\includegraphics[width=0.8\linewidth]{image/programovani-02.jpg} 
+			\includegraphics[width=0.65\linewidth]{image/car.png} 
 		\end{figure}
 		
 		\vspace{0.02 \textheight}
@@ -314,15 +326,17 @@ Godovskému za jeho doporučení a půjčení testovacích součástek a panu u�
 %% Stránka obsahující abstrakt (anotaci)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
 	\noindent{\Large{\bfseries{Abstrakt}\\}}
-	\noindent Tento projekt se zabývá vytvoření RC auta s využitím vývojové desky ESP32-CAM a Arduina. Hlavním cílem bylo implementovat možnost dálkového ovládání vozidla přes WiFi a přenosu obrazu z kamery. Přestože jsem úspěšně vytvořil funkční RC auto s manuálním ovládáním a sledováním, nezakomponoval jsem zde detekci překážek a automatický pohyb. Budoucí plány směřují k rozšíření těchto funkcí.
- 
-  \noindent Komunikace s RC autem probíhá přes WiFi, kde uživatel zadává heslo k připojení. Po úspěšném připojení k síti pomocí mobilu nebo počítače zadává IP adresu, čímž se připojuje na server RC auta. Na obrazovce se okamžitě zobrazuje živý obraz z kamery, spolu s šipkami umožňujícími ovládání pohybu vozidla. Uživatel tak může intuitivně a v reálném čase ovládat RC auto prostřednictvím svého zařízení.
+	\noindent Tento projekt se zabývá vytvoření RC auta s využitím vývojové desky ESP32-CAM a Arduina. Komunikace s RC autem probíhá přes WiFi, kde uživatel zadává heslo k připojení. Po úspěšném připojení k síti pomocí mobilu nebo počítače zadává IP adresu, čímž se připojuje na server RC auta. Na obrazovce se okamžitě zobrazuje živý obraz z kamery, spolu s šipkami umožňujícími ovládání pohybu vozidla. Uživatel tak může intuitivně a v reálném čase ovládat RC auto prostřednictvím svého zařízení.
 	
 	\vspace{18pt}
 	
 	\noindent{\large{\bfseries{Klíčová slova}}}
 	
 	\noindent RC auto, ESP32-CAM, Arduino, WiFi, vzdálené ovládání, kamera
+
+    \noindent{\Large{\bfseries{Abstrakt v angličtině}\\}}
+    \noindent This project deals with the creation of an RC car using the ESP32-CAM development board and Arduino. Communication with the RC car is via WiFi, where the user enters a password to connect. After successfully connecting to the network using a mobile phone or computer, the user enters an IP address to connect to the RC car server. A live image from the camera is displayed on the screen, along with arrows to control the movement of the vehicle. This allows the user to control the RC car intuitively and in real time with their device.
+    
     \clearpage
 %% Stránka s generovaným obsahem
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
@@ -383,19 +397,8 @@ Godovskému za jeho doporučení a půjčení testovacích součástek a panu u�
 \noindent Sestavování bylo krok po kroku, součástka po součástce. Dával jsem pozor na každý detail, aby vše bylo správně připojeno a pevně drželo. Ostatní součástky jsem testoval předtím, než jsem je úplně zapojil, abych se vyhnul pozdějším potížím.
 
 \noindent Až poté, co bylo vše fyzicky spojeno, přišla na řadu fáze programování. Začal jsem s jednoduchými příklady pro zobrazení obrazu z kamery. Pro programování jsem použil jazyk Arduino, což je kombinace jazyku C a C++. Na komunikaci s webem jsem potřeboval speciální balíčky, například AsyncTCP, který tvořil základ pro ESPAsyncWebServer. Design webového rozhraní jsem upravil s pomocí HTML, CSS a dalších technologií, které mi ulehčili zpříjemnit vzhled stránky.
-
-\chapter{PRINCIP VZDÁLENÉHO OVLÁDÁNÍ}
-\noindent Mým primárním cílem bylo navázat bezdrátovou komunikaci prostřednictvím WiFi. K tomu jsem využil mikrokontrolér ESP32 a Arduino, kde Arduino plnilo roli programátoru pro nahrávání kódu do ESP32. Zásadním krokem bylo vytvoření spojení se serverem. Ovladač (mobilní zařízení nebo počítač) se připojí k serveru přes WiFi po zadání přístupových údajů (hesla) se naváže spojení umožňující zadat IP adresu do prohlížece a zahájit komunikaci mezi ovladačem a modelem RC auta.
-
-\noindent Implementace ovládání vozidla byla následným krokem, kde na webovém rozhraní byla integrována šipková tlačítka umožňující pohyb vozidla vpřed, vzad, doprava a doleva. To vytvořilo intuitivní a snadno ovladatelný systém.
-
-
-\chapter{VYUŽITÉ TECHNOLOGIE}
-
-\section{HARDWARE}
-
-\noindent V této kapitole se seznámíme s použitým hardware.
-
+\newpage
+\section{Použitý hardware}
 \subsection{Seznam součástek}
 \begin{itemize}
     \item Vývojová deska ESP32-CAM,
@@ -456,20 +459,28 @@ Godovskému za jeho doporučení a půjčení testovacích součástek a panu u�
         \label{fig:akumulator}
     \end{figure}
 
-\section{SOFTWARE}
-\noindent V této kapitole se podíváme na použitým software.
-
+\section{Použitý software}
 \subsection{Použitý jazyk}
 \noindent Pro mé RC auto jsem použil programovací jazyk Arduino, který nabízí efektivní a snadný způsob psaní kódu pro mikrokontroléry. Jazyk Arduino vychází z C a C++, ale je přizpůsoben pro jednoduchost a srozumitelnost i pro začátečníky v programování. Díky své intuitivní syntaxi a podpoře komunity se stal nepostradatelným nástrojem pro vytváření elektronických projektů.
 
 \subsection{Arduino IDE}
 \noindent Pro psání kódu jsem využil vývojové prostředí Arduino IDE 2.2.2 bylo pro můj projekt klíčové. Jeho integrovaný editor kódu, podporující automatické doplňování, výrazně usnadnil psaní kódu. Toto užitečné funkce nejen zvýšily efektivitu mé práce, ale také minimalizovaly chyby v kódu. 
 
+\newpage
 \subsection{Web Server}
 \noindent Využil jsem knihovnu ESPAsyncWebServer pro implementaci WebServeru na mikrokontrolér ESP32. Tato knihovna poskytuje asynchronní zpracování webových požadavků. Pro zlepšení rozhraní jsem využil moderní webové technologie, včetně HTML, CSS a JavaScriptu. Na stránce jsou tlačítka pro ovládání pohybu vozidla a posuvník pro nastavení intenzity světela.
 
 \subsection{WebSocket komunikace}
 \noindent V projektu jsem využil WebSocket komunikaci s knihovnou ESPAsyncWebServer, což umožnilo rychlou a efektivní výměnu dat mezi mikrokontrolérem a webovým rozhraním. K posílání funkcí a interaktivnímu ovládání na straně webového rozhraní jsem implementoval JavaScript, což poskytuje uživatelům schopnost aktivně ovládat a komunikovat s mikrokontrolérem přes webové rozhraní.
+
+\chapter{PRINCIP VZDÁLENÉHO OVLÁDÁNÍ}
+\noindent Mým primárním cílem bylo navázat bezdrátovou komunikaci prostřednictvím WiFi. K tomu jsem využil mikrokontrolér ESP32 a Arduino, kde Arduino plnilo roli programátoru pro nahrávání kódu do ESP32. Zásadním krokem bylo vytvoření spojení se serverem. Ovladač (mobilní zařízení nebo počítač) se připojí k serveru přes WiFi po zadání přístupových údajů (hesla) se naváže spojení umožňující zadat IP adresu do prohlížece a zahájit komunikaci mezi ovladačem a modelem RC auta.
+
+\noindent Implementace ovládání vozidla byla následným krokem, kde na webovém rozhraní byla integrována šipková tlačítka umožňující pohyb vozidla vpřed, vzad, doprava a doleva. To vytvořilo intuitivní a snadno ovladatelný systém.
+
+
+
+
 
 \chapter{POUŽITÉ POSTUPY A ŘEŠENÍ}
 
@@ -503,52 +514,101 @@ Godovskému za jeho doporučení a půjčení testovacích součástek a panu u�
 
 \subsection{Definice proměných a knihoven}
 \noindent Pro ovládání motorů jsem vytvořil strukturu MOTOR PINS a v ní definovat vektor motorPins, který obsahuje informace o pinech pro každý motor. Pomocí PWM signálu mám možnost plynule upravovat rychlost motorů podle potřeby. Abych dosáhl optimálního řízení, nastavil jsem konstanty pro frekvenci (PWMFreq) a rozlišení (PWMResolution) PWM signálu. Dále jsem provedl inicializaci pinů sloužících k řízení rychlosti motorů a přiřadil je k odpovídajícím PWM kanálům.
-\begin{figure}[H]
-		\includegraphics[width=0.6\textwidth]{image/kod1.png}
-        \caption*{\textit{obrázek č. 9 Ukazka kodu připojení potřebných knihoven}}
-        \label{fig:kod1}
-    \end{figure}
-\begin{figure}[H]
-	\includegraphics[width=0.6\textwidth]{image/kod2.png}
-    \caption*{\textit{obrázek č. 9 Ukazka definice proměných}}
-    \label{fig:kod2}
-\end{figure}
-
 \subsection{Řešení ovládání vozidla}
 \noindent Ovládání pohybu vozidla jsem implementoval pomocí dvou funkcí. První z nich, rotateMotor(), umožňuje kontrolu otáčení motorů podle zadaného směru. Využívá předem definovanou strukturu MOTOR PINS a vektor motorPins, který obsahuje informace o pinech pro každý motor.
-
+\begin{lstlisting}[caption={Příklad funkce moveCar()}, label=lst:arduino]
+void moveCar(int inputValue) {
+  Serial.printf("Got value as %d\n", inputValue);
+  switch (inputValue) {
+    case UP:
+      rotateMotor(RIGHT_MOTOR, FORWARD);
+      rotateMotor(LEFT_MOTOR, FORWARD);
+      break;
+    case DOWN:
+      rotateMotor(RIGHT_MOTOR, BACKWARD);
+      rotateMotor(LEFT_MOTOR, BACKWARD);
+      break;
+    case LEFT:
+      rotateMotor(RIGHT_MOTOR, FORWARD);
+      rotateMotor(LEFT_MOTOR, BACKWARD);
+      break;
+    case RIGHT:
+      rotateMotor(RIGHT_MOTOR, BACKWARD);
+      rotateMotor(LEFT_MOTOR, FORWARD);
+      break;
+    case STOP:
+      rotateMotor(RIGHT_MOTOR, STOP);
+      rotateMotor(LEFT_MOTOR, STOP);
+      break;
+    default:
+      rotateMotor(RIGHT_MOTOR, STOP);
+      rotateMotor(LEFT_MOTOR, STOP);
+      break;
+  }
+}
+\end{lstlisting}
+\newpage
 \noindent Druhou funkcí je moveCar(), která přebírá vstupní hodnotu a na základě ní řídí pohyb vozidla. Používá funkci rotateMotor pro nastavení různých směrů pohybu, jako jsou nahoru, dolů, doleva a doprava. Při příjmu hodnoty UP nebo DOWN jsou oba motory nastaveny tak, aby se vozidlo pohybovalo vpřed nebo vzad. Při směrech LEFT a RIGHT jsou motory nakonfigurovány tak, aby vozidlo rotujícím způsobem změnilo směr.
 
 \section{Web server}
 \subsection{Zpracování dat}
 \noindent V další části kódu se starám o komunikaci mezi webovým rozhraním a vozidlem. Funkce onCarInputWebSocketEvent() je vyvolána při různých událostech spojených s WebSocket. Když se klient připojí, ukládají se informace o připojení. Pokud klient odejde, zastaví se pohyb vozidla a vypne se světlo. Funkce initCarInputWebSocket() inicializuje WebSocket pro příjem ovládacích příkazů od klienta. Při připojení klienta jsou automaticky nastaveny výchozí hodnoty rychlosti a světla vozidla. Ve smyčce loop() neustále komunikuji přes WebSocket a čistím nepoužívané klienty. Ovládání vozidla je obsaženo ve funkci moveCar(), kde jsou na základě příchozích hodnot řízeny pohyby vozidla.
-
+\begin{lstlisting}[caption={Ukázka zpracování odpojení a připojení klienta}, label=lst:arduino]
+void onCarInputWebSocketEvent(AsyncWebSocket *server,
+                              AsyncWebSocketClient *client,
+                              AwsEventType type,
+                              void *arg,
+                              uint8_t *data,
+                              size_t len) {
+  switch (type) {
+    case WS_EVT_CONNECT:
+      Serial.printf("WebSocket client #%u connected from %s\n", client->id(), client->remoteIP().toString().c_str());
+      break;
+    case WS_EVT_DISCONNECT:
+      Serial.printf("WebSocket client #%u disconnected\n", client->id());
+      moveCar(0);
+      ledcWrite(PWMLightChannel, 0);
+      break;
+\end{lstlisting}
 \subsection{Vzhled}
 \noindent Webové rozhraní obsahuje obrazový prvek pro zobrazení kamery a tlačítka pro ovládání vozidla, umístěná uvnitř kontejneru. Rozhraní je stylizováno pomocí CSS, které zajištujě reponzivitu. Pro ovládání pohybu vozidla jsou k dispozici čtyři tlačítka (nahoru, dolů, doleva, doprava), která jsou implementována jako HTML tlačítka s ikonami SVG. Každé tlačítko reaguje na interakci s myší nebo dotykem na dotykovém zařízení. Kromě ovládání pohybu vozidla jsou k dispozici další prvky, jako posuvník pro nastavení intenzity světla na vozidle.
-\begin{figure}[H]
-    \centering
-	\includegraphics[width=0.6\textwidth, height=5.5cm]{image/webscreen.png}
-    \caption*{\textit{obrázek č. 10 Jednoduchá ukázka webu bez obrazu kamery}}
-    \label{fig:webDesign}
-\end{figure}
 
 	\chapter{Výsledky řešení}
 
     \section{Podoba RC auta}
     \noindent RC auto momentálně představuje funkční jednotku s minimalistickým vzhledem. Pro dosažení esteticky poutavější podoby a zároveň zvýšení odolnosti plánuji přidat karosérii. Aktuálně je vozidlo křehké. To chci vyřešit přidáním karosérie. Do budoucna mám v úmyslu lépe organizovat součástky tak, aby se snadněji aplikovala karosérie. Toto uspořádání by mělo zohledňovat nejen estetiku, ale také praktičnost údržby. Také bych chtěl optimalizovat rozmístění drátků, které v současné době občas mohou narušit chod auta a vadit objektivu kamery. Mým cílem je zajistit bezproblémový provoz a zvýšit celkovou spolehlivost RC auta.
+       \begin{figure}[H]
+    \centering
+	\includegraphics[width=0.8\textwidth]{image/car.png}
+    \caption*{\textit{obrázek č. 9 Vzhled auta}}
+    \label{fig:webDesign}
+\end{figure}
     
-    \section{Podoba web serveru}
+    \section{Podoba klienta}
 
     \noindent Web server splňuje svůj účel, umožňuje snadné ovládání mého RC auta. Připojení k serveru je jednoduché - stačí se připojit k WiFi pomocí hesla a zadat správnou IP adresu do vyhledávače. Ihned se ocitneme v interaktivním rozhraní. Současný design webové stránky zaručuje plnou responzivitu, což umožňuje pohodlný přístup nejen z počítačů, ale také z mobilních zařízení. Díky integrované kameře máme možnost sledovat skutečný obraz z kamery.
+    \begin{figure}[H]
+    \centering
+	\includegraphics[width=0.9\textwidth]{image/web.png}
+    \caption*{\textit{obrázek č. 10 Jednoduchá ukázka webu bez obrazu kamery}}
+    \label{fig:webDesign}
+\end{figure}
  
 	\chapter*{Závěr}
 	\noindent Hlavní cíle mého projektu zahrnovaly sestavení funkčního RC auta, jeho dálkové ovládání přes WiFi a přenos obrazu z kamery. Zadané cíle byly s úspěchem dosaženy. RC auto bylo úspěšně sestaveno a vybaveno funkcemi dálkového ovládání a přenosu obrazu z kamery. I když se v průběhu projektu objevily další nápady, jako je detekce překážek a automatický pohyb, ty jsou plánovány pro budoucí vylepšení. Rovněž se zamýšlím nad vylepšením vizuálního designu auta, ale nepodařilo se mi aplikovat plánovaný model. Projekt byl pro mě inspirativní a přinesl spoustu výzev, ačkoli ne všechny části byly dokončeny podle původního plánu.
+
+    \noindent Odkaz na GitHub: \href{https://github.com/MichaelMeinhard/zaverecny-projekt}{https://github.com/MichaelMeinhard/zaverecny-projekt}
 	
 	%% literatura
 	\begin{thebibliography}{99}
 		\bibitem{sspuLogo} \textit{Střední škola průmyslová a umělecká Opava} [online]. [cit. 2023-11-11]. Dostupné z: \url{https://www.sspu-opava.cz}
-	\end{thebibliography}
-	
-	\chapter*{Seznam příloh}
-	
+        \bibitem{esp32Cam} \textit{Drátek} [online]. [cit. 2023-28-12].
+        Dostupné z: \url{https://dratek.cz/arduino/7587-esp32-cam-vyvojova-deska-wifi-bluetooth-s-kamerovym-modulem-ov2640.html}
+        \bibitem{HMustek} \textit{Drátek} [online]. [cit. 2023-28-12].
+        Dostupné z: \url{https://dratek.cz/arduino/877-arduino-h-mustek-pro-krokovy-motor-l298n-dual-h-most-dc.html}
+        \bibitem{arduinoMega} \textit{Arduino docs} [online]. [cit. 2023-28-12].
+        Dostupné z: \url{https://docs.arduino.cc/hardware/mega-2560l}
+        \bibitem{akumulátor} \textit{Mz racing} [online]. [cit. 2023-28-12].
+        Dostupné z: \url{https://www.mz-racing.net/160150-hpi-plazma-2000mah-nimh-7-2v-p42595}
+	\end{thebibliography}	
 \end{document}
