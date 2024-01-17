@@ -376,6 +376,10 @@ void moveCar(int inputValue) {
       rotateMotor(LEFT_MOTOR, FORWARD);
       break;
 
+    case STOP:
+      rotateMotor(RIGHT_MOTOR, STOP);
+      rotateMotor(LEFT_MOTOR, STOP);
+    
     default:
       rotateMotor(RIGHT_MOTOR, STOP);
       rotateMotor(LEFT_MOTOR, STOP);
@@ -463,6 +467,7 @@ void onCameraWebSocketEvent(AsyncWebSocket *server,
   }
 }
 
+// Setup for camera settings (config)
 void setupCamera() {
   camera_config_t config;
   config.ledc_channel = LEDC_CHANNEL_0;
@@ -490,7 +495,7 @@ void setupCamera() {
   config.jpeg_quality = 10;
   config.fb_count = 1;
 
-  // camera init
+  // Camera init
   esp_err_t err = esp_camera_init(&config);
   if (err != ESP_OK) {
     Serial.printf("Camera init failed. 0x%x", err);
@@ -501,13 +506,14 @@ void setupCamera() {
     heap_caps_malloc_extmem_enable(20000);
   }
 }
-//function for sending capcured images from camera to the client
+
+// Function for sending capcured images from camera to the client
 void sendCameraPicture() {
   if (cameraClientId == 0) {
     return;
   }
   unsigned long startTime1 = millis();
-  //capture a frame
+  // Capture image from cam
   camera_fb_t *fb = esp_camera_fb_get();
   if (!fb) {
     Serial.println("No buffer acquired");
@@ -518,7 +524,7 @@ void sendCameraPicture() {
   wsCamera.binary(cameraClientId, fb->buf, fb->len);
   esp_camera_fb_return(fb);
 
-  //Wait for message to be delivered
+  //Waiting for message to be delivered
   while (true) {
     AsyncWebSocketClient *clientPointer = wsCamera.client(cameraClientId);
     if (!clientPointer || !(clientPointer->queueIsFull())) {
@@ -535,6 +541,7 @@ void setUpPinModes() {
   ledcSetup(PWMSpeedChannel, PWMFreq, PWMResolution);
   ledcSetup(PWMLightChannel, PWMFreq, PWMResolution);
 
+  // Set pin modes for motor control
   for (int i = 0; i < motorPins.size(); i++) {
     pinMode(motorPins[i].pinEn, OUTPUT);
     pinMode(motorPins[i].pinIN1, OUTPUT);
@@ -551,21 +558,22 @@ void setUpPinModes() {
 
 
 void setup(void) {
+  // Set up pin modes and initialize Serial communication
   setUpPinModes();
   Serial.begin(115200);
 
+  // Set a Wifi acces point
   WiFi.softAP(ssid, password);
   IPAddress IP = WiFi.softAPIP();
 
   server.on("/", HTTP_GET, handleRoot);
   server.onNotFound(handleNotFound);
-
+  // WebSocket events handlers fo car and camera
   wsCamera.onEvent(onCameraWebSocketEvent);
   server.addHandler(&wsCamera);
-
   wsCarInput.onEvent(onCarInputWebSocketEvent);
   server.addHandler(&wsCarInput);
-
+  // Starting HTTP server
   server.begin();
   Serial.println("HTTP server started");
 
@@ -574,6 +582,7 @@ void setup(void) {
 
 
 void loop() {
+  // Clean up WebSocket clients
   wsCamera.cleanupClients();
   wsCarInput.cleanupClients();
   sendCameraPicture();
