@@ -7,7 +7,7 @@
 - atd.
 
 ## Zdroje pro práci:
-- [Inspirace pro projekt](https://www.youtube.com/watch?v=HfQ7lhhgDOk&ab_channel=hashincludeelectronics)
+- [Inspirace pro projekt](https://www.youtube.com/watch?v=EGI_csHbBIA)
 
 ## Technologie
 ### SW
@@ -17,10 +17,15 @@
 - Vývojová deska ESP32-CAM, WiFi + Bluetooth s kamerovým modulem OV2640
 - H můstek pro krokový motor - L298N Dual H Most DC
 - Akumulátor HPI Plazma Ni-MH 7.2V 2000mAh 
-- Ultrazvukový měřič vzdálenosti pro Arduino - 5Pin HY-SRF05 (Zatím nepoužito)
-- Infračervený senzor překážek (Zatím nepoužito)
+- Ultrazvukový měřič vzdálenosti pro Arduino - 5Pin HY-SRF05 (Budoucí plán)
+- Infračervený senzor překážek (Budoucí plán)
 
 ## Turoriály
 - https://www.youtube.com/watch?v=k_PJLkfqDuI&t=759s&ab_channel=MaxImagination
 - https://www.youtube.com/watch?v=Sb08leLWOgA&ab_channel=DavyWybiral
 - https://www.youtube.com/watch?v=q-KIpFIbRMk&t=45s&ab_channel=TechStudyCell
+
+## Závěr
+- Částečně jsem dosáhl toho co jsem chtěl co se týče pohybu vozidla
+- Ohledně spolehlivosti kamery to neskončilo úplně štastně, ale částečně funguje
+- Chtěl bych kód vylepšit a možná i pozměnit technologie nebo knihovny pro zlepšení do budoucnosti
