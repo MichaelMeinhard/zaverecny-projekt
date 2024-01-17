@@ -1,3 +1,4 @@
+
 #include "esp_camera.h"
 #include <Arduino.h>
 #include <WiFi.h>
@@ -6,30 +7,38 @@
 #include <iostream>
 #include <sstream>
 
+// Create structure to store motor pins
 struct MOTOR_PINS {
   int pinEn;
   int pinIN1;
   int pinIN2;
 };
 
+// Definition for motor pins for, right and left
 std::vector<MOTOR_PINS> motorPins = {
   { 12, 13, 15 },  //RIGHT_MOTOR Pins (EnA, IN1, IN2)
   { 12, 14, 2 },   //LEFT_MOTOR  Pins (EnB, IN3, IN4)
 };
+
+// Pin defined for light
 #define LIGHT_PIN 4
 
+// Constants for directions
 #define UP 1
 #define DOWN 2
 #define LEFT 3
 #define RIGHT 4
 #define STOP 0
 
+// Define right and left motor
 #define RIGHT_MOTOR 0
 #define LEFT_MOTOR 1
 
+// Also another motor directions
 #define FORWARD 1
 #define BACKWARD -1
 
+// Pulse width modulation constants
 const int PWMFreq = 1000; /* 1 KHz */
 const int PWMResolution = 8;
 const int PWMSpeedChannel = 2;
@@ -56,11 +65,13 @@ const int PWMLightChannel = 3;
 const char *ssid = "WiFiCar";
 const char *password = "123456781";
 
+// Async Web Server and WebSocket instances
 AsyncWebServer server(80);
 AsyncWebSocket wsCamera("/Camera");
 AsyncWebSocket wsCarInput("/CarInput");
 uint32_t cameraClientId = 0;
 
+// Basicialy whole HTML code for the page with use of SVG designn, js
 const char *htmlHomePage PROGMEM = R"HTMLHOMEPAGE(
 <!DOCTYPE html>
 <html>
@@ -325,7 +336,7 @@ const char *htmlHomePage PROGMEM = R"HTMLHOMEPAGE(
 </html>
 )HTMLHOMEPAGE";
 
-
+// Function for controling rotations of motors
 void rotateMotor(int motorNumber, int motorDirection) {
   if (motorDirection == FORWARD) {
     digitalWrite(motorPins[motorNumber].pinIN1, LOW);
@@ -339,11 +350,12 @@ void rotateMotor(int motorNumber, int motorDirection) {
   }
 }
 
+// Function to move car based on input values
 void moveCar(int inputValue) {
-  Serial.printf("Got value as %d\n", inputValue);
   switch (inputValue) {
 
     case UP:
+      // If you see rigt and left motor are forward so you can go straight
       rotateMotor(RIGHT_MOTOR, FORWARD);
       rotateMotor(LEFT_MOTOR, FORWARD);
       break;
@@ -354,6 +366,7 @@ void moveCar(int inputValue) {
       break;
 
     case LEFT:
+      // Rotate left thanks to inversed direction
       rotateMotor(RIGHT_MOTOR, FORWARD);
       rotateMotor(LEFT_MOTOR, BACKWARD);
       break;
@@ -363,11 +376,6 @@ void moveCar(int inputValue) {
       rotateMotor(LEFT_MOTOR, FORWARD);
       break;
 
-    case STOP:
-      rotateMotor(RIGHT_MOTOR, STOP);
-      rotateMotor(LEFT_MOTOR, STOP);
-      break;
-
     default:
       rotateMotor(RIGHT_MOTOR, STOP);
       rotateMotor(LEFT_MOTOR, STOP);
@@ -375,6 +383,7 @@ void moveCar(int inputValue) {
   }
 }
 
+// Handler for HTTP requests
 void handleRoot(AsyncWebServerRequest *request) {
   request->send_P(200, "text/html", htmlHomePage);
 }
@@ -391,9 +400,11 @@ void onCarInputWebSocketEvent(AsyncWebSocket *server,
                               size_t len) {
   switch (type) {
     case WS_EVT_CONNECT:
+      // Client has connected to the server
       Serial.printf("WebSocket client #%u connected from %s\n", client->id(), client->remoteIP().toString().c_str());
       break;
     case WS_EVT_DISCONNECT:
+      // Client has disconnected from the server
       Serial.printf("WebSocket client #%u disconnected\n", client->id());
       moveCar(0);
       ledcWrite(PWMLightChannel, 0);
@@ -408,7 +419,6 @@ void onCarInputWebSocketEvent(AsyncWebSocket *server,
         std::string key, value;
         std::getline(ss, key, ',');
         std::getline(ss, value, ',');
-        Serial.printf("Key [%s] Value[%s]\n", key.c_str(), value.c_str());
         int valueInt = atoi(value.c_str());
         if (key == "MoveCar") {
           moveCar(valueInt);
@@ -427,6 +437,7 @@ void onCarInputWebSocketEvent(AsyncWebSocket *server,
   }
 }
 
+// Function to handle websocket event for camera
 void onCameraWebSocketEvent(AsyncWebSocket *server,
                             AsyncWebSocketClient *client,
                             AwsEventType type,
@@ -482,16 +493,15 @@ void setupCamera() {
   // camera init
   esp_err_t err = esp_camera_init(&config);
   if (err != ESP_OK) {
-    Serial.printf("Camera init failed with error 0x%x", err);
+    Serial.printf("Camera init failed. 0x%x", err);
     return;
   }
 
   if (psramFound()) {
     heap_caps_malloc_extmem_enable(20000);
-    Serial.printf("PSRAM initialized. malloc to take memory from psram above this size");
   }
 }
-
+//function for sending capcured images from camera to the client
 void sendCameraPicture() {
   if (cameraClientId == 0) {
     return;
@@ -500,7 +510,7 @@ void sendCameraPicture() {
   //capture a frame
   camera_fb_t *fb = esp_camera_fb_get();
   if (!fb) {
-    Serial.println("Frame buffer could not be acquired");
+    Serial.println("No buffer acquired");
     return;
   }
 
@@ -518,7 +528,6 @@ void sendCameraPicture() {
   }
 
   unsigned long startTime3 = millis();
-  Serial.printf("Time taken Total: %d|%d|%d\n", startTime3 - startTime1, startTime2 - startTime1, startTime3 - startTime2);
 }
 
 void setUpPinModes() {
@@ -547,8 +556,6 @@ void setup(void) {
 
   WiFi.softAP(ssid, password);
   IPAddress IP = WiFi.softAPIP();
-  Serial.print("AP IP address: ");
-  Serial.println(IP);
 
   server.on("/", HTTP_GET, handleRoot);
   server.onNotFound(handleNotFound);
@@ -570,5 +577,4 @@ void loop() {
   wsCamera.cleanupClients();
   wsCarInput.cleanupClients();
   sendCameraPicture();
-  Serial.printf("SPIRam Total heap %d, SPIRam Free Heap %d\n", ESP.getPsramSize(), ESP.getFreePsram());
 }
